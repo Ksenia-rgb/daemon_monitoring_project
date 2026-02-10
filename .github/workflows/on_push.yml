@@ -13,9 +13,7 @@ jobs:
           for COMMIT_MSG in $COMMIT_MESSAGES; do
             if [[ ! "$COMMIT_MSG" =~ ^\[(KS|IL|MI|ST|MA)-(D|C)\] ]]; then
               if [[ ! "$COMMIT_MSG" =~ ^\[KS-(tests|master)\] ]]; then
-                echo "Commit '$COMMIT_MSG' message PR title must start with your [init letters] and\
-                  continue with [C for Client part] or [D for Daemon part] or\
-                  [tests] or [master]" >&2"
+                echo "Incorrect commit message" >&2"
                 echo "Current message: $COMMIT_MSG" >&2
               exit 1
             fi            
