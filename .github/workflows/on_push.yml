@@ -6,28 +6,4 @@ jobs:
     steps:
       - name: Check commit message
         run: |
-          if [[ "${{ github.event_name }}" == "push" ]]; then
-            COMMITS="${{ toJson(github.event.commits) }}"
-          else
-            COMMITS="${{ toJson(github.event.pull_request.commits) }}"
-          fi
-          
-          MESSAGES=$(echo "$COMMITS" | jq -r '.[].commit.message')
-          
-          while IFS= read -r COMMIT_MSG; do
-            echo "Checking: $COMMIT_MSG"
-            
-            if [[ "$COMMIT_MSG" =~ ^Merge\ branch ]]; then
-              echo "  Skipping merge commit"
-              continue
-            fi
-
-            if [[ ! "$COMMIT_MSG" =~ ^\[(KS|IL|MI|ST|MA)-(D|C)\] ]]; then
-              if [[ ! "$COMMIT_MSG" =~ ^\[KS-(tests|master)\] ]]; then
-                echo "Incorrect commit message" >&2
-                echo "Current message: $COMMIT_MSG" >&2
-              exit 1
-            fi            
-          done
-          
-          echo "All commit messages have the correct prefix"
+          python -m scripts/test_commit_msg.py
