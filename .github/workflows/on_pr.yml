@@ -9,8 +9,8 @@ jobs:
             PR_TITLE="${{ github.event.pull_request.title }}"
             if [[ ! "$PR_TITLE" =~ ^\[(KS|IL|MI|ST|MA)-(D|C)\] ]]; then
               if [[ ! "$PR_TITLE" =~ ^\[KS-(tests|master)\] ]]; then
-                echo "PR title must start with your [init letters] and
-                  continue with [C for Client part] or [D for Daemon part] or
+                echo "PR title must start with your [init letters] and\
+                  continue with [C for Client part] or [D for Daemon part] or\
                   [tests] or [master]" >&2
                 echo "Current title: $PR_TITLE" >&2
                 exit 1
