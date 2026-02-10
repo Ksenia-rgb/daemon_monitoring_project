@@ -1,22 +1,6 @@
-name: content
-on: [push, pull_request]
+name: content in push
+on: push
 jobs:
-  check-pr-title:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check PR title format
-        run: |
-          PR_TITLE="${{ github.event.pull_request.title }}"
-          if [[ ! "$PR_TITLE" =~ ^\[(KS|IL|MI|ST|MA)-(D|C)\] ]]; then
-            if [[ ! "$PR_TITLE" =~ ^\[KS-(tests|master)\] ]]; then
-              echo "PR title must start with your [init letters] and
-                continue with [C for Client part] or [D for Daemon part] or
-                [tests] or [master]" >&2
-              echo "Current title: $PR_TITLE" >&2
-              exit 1
-            fi
-          fi
-          echo "PR title format is correct"
   check-commit-message:
     runs-on: ubuntu-latest
     steps:
@@ -32,9 +16,9 @@ jobs:
                 echo "Commit '$COMMIT_MSG' message PR title must start with your [init letters] and
                   continue with [C for Client part] or [D for Daemon part] or
                   [tests] or [master]" >&2"
-                echo "Current message: $PR_TITLE" >&2
+                echo "Current message: $COMMIT_MSG" >&2
               exit 1
             fi            
           done
           
-          echo "All commit messages have the correct prefix: $PR_PREFIX"
+          echo "All commit messages have the correct prefix"
