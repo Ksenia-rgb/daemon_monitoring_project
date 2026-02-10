@@ -1,0 +1,26 @@
+name: content in pull_request
+on: pull_request
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Get pr commits
+        run: |
+          COMMITS=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              "${{ github.event.pull_request.commits_url }}" | jq -c '[.[] | .commit]')
+            
+          echo "COMMITS=$COMMITS" >> $GITHUB_ENV
+          echo "$COMMITS"
+
+      - name: Check PR title format
+        env:
+          PR_TITLE: "${{ github.event.pull_request.title }}"
+        run: |
+          python3 .github/scripts/test_pr.py
+      - name: Check commit message
+        env:
+          COMMITS: "${{ env.COMMITS }}"
+        run: |
+          python3 .github/scripts/test_commit_msg.py

@@ -1,0 +1,15 @@
+name: content in push
+on: push
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Check commit message
+        env:
+          COMMITS: "${{ toJson(github.event.commits) }}"
+        run: |
+          echo "$COMMITS"
+          python3 .github/scripts/test_commit_msg.py 
+      
