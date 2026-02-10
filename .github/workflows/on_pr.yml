@@ -2,16 +2,16 @@ name: content in pull_request
 on: pull_request
 jobs:
   check-pr-title:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Check PR title format
-          run: |
-            PR_TITLE="${{ github.event.pull_request.title }}"
-            if [[ ! "$PR_TITLE" =~ ^\[(KS|IL|MI|ST|MA)-(D|C)\] ]]; then
-              if [[ ! "$PR_TITLE" =~ ^\[KS-(tests|master)\] ]]; then
-                echo "Incorrect pr title" >&2
-                echo "Current title: $PR_TITLE" >&2
-                exit 1
-              fi
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR title format
+        run: |
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          if [[ ! "$PR_TITLE" =~ ^\[(KS|IL|MI|ST|MA)-(D|C)\] ]]; then
+            if [[ ! "$PR_TITLE" =~ ^\[KS-(tests|master)\] ]]; then
+              echo "Incorrect pr title" >&2
+              echo "Current title: $PR_TITLE" >&2
+              exit 1
             fi
-            echo "PR title format is correct"
+          fi
+          echo "PR title format is correct"
