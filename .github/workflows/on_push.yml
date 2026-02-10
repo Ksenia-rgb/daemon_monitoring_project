@@ -1,16 +1,27 @@
 name: content in push
-on: push
+on: [push, pull_request]
 jobs:
   check-commit-message:
     runs-on: ubuntu-latest
     steps:
       - name: Check commit message
         run: |
-          COMMITS_URL="${{ github.event.pull_request.commits_url }}"
-          COMMIT_MESSAGES=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "$COMMITS_URL" | jq -r '.[].commit.message')
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            COMMITS="${{ toJson(github.event.commits) }}"
+          else
+            COMMITS="${{ toJson(github.event.pull_request.commits) }}"
+          fi
+          
+          MESSAGES=$(echo "$COMMITS" | jq -r '.[].commit.message')
+          
+          while IFS= read -r COMMIT_MSG; do
+            echo "Checking: $COMMIT_MSG"
+            
+            if [[ "$COMMIT_MSG" =~ ^Merge\ branch ]]; then
+              echo "  Skipping merge commit"
+              continue
+            fi
 
-          IFS=$'\n'
-          for COMMIT_MSG in $COMMIT_MESSAGES; do
             if [[ ! "$COMMIT_MSG" =~ ^\[(KS|IL|MI|ST|MA)-(D|C)\] ]]; then
               if [[ ! "$COMMIT_MSG" =~ ^\[KS-(tests|master)\] ]]; then
                 echo "Incorrect commit message" >&2
