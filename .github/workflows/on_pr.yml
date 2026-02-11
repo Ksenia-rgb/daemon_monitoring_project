@@ -6,10 +6,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
+      - name: Get pr commits
+        run: |
+          COMMITS=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              "${{ github.event.pull_request.commits_url }}")
+            
+          echo "COMMITS='$COMMITS_JSON'" >> $GITHUB_ENV
+
       - name: Check PR title format
         env:
           PR_TITLE: "${{ github.event.pull_request.title }}"
-          COMMITS: "${{ toJson(github.event.pull_request.commits) }}"
+          COMMITS: "${{ env.COMMITS }}"
         run: |
           python3 scripts/test_pr.py
           python3 scripts/test_commit_msg.py
