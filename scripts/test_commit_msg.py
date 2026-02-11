@@ -24,6 +24,7 @@ def main():
   for msg in messages:
     if not check_commit_message(msg):
       print("Commit message must begin with your [init letters] and continue with [C for Client] or [D for Daemon] or [master] or [tests]")
+      print("Your current message:", msg)
       sys.exit(1)
   print("All commits messages are correct")
   
