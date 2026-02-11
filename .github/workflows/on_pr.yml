@@ -5,9 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check PR title format
+        env:
+          PR_TITLE: "${{ github.event.pull_request.title }}"
+          COMMITS: "${{ toJson(github.event.pull_request.commits) }}"
         run: |
-          PR_TITLE=$(echo "${{ github.event.pull_request.title }}")
-          COMMITS=$(echo "${{ toJson(github.event.pull_request.commits) }}" | jq -r '.[].message')
-
           python -m scripts/test_pr
           python -m scripts/test_commit_msg
