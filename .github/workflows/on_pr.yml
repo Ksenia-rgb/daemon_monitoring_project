@@ -6,7 +6,7 @@ jobs:
     steps:
       - name: Check PR title format
         env:
-          PR_TITLE="${{ github.event.pull_request.title | jq -r '.[].message' }}"
+          PR_TITLE="${{ github.event.pull_request.title }}"
           COMMITS="${{ toJson(github.event.pull_request.commits) }}"
         run: |
           python -m scripts/test_pr
