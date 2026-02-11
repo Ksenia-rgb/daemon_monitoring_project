@@ -2,6 +2,7 @@
 
 import re
 import os
+import sys
 import json
 
 def check_commit_message(msg: str) -> re.match:
@@ -14,13 +15,14 @@ def check_commit_message(msg: str) -> re.match:
 def main():
   commits = os.getenv("COMMITS")
   if not commits:
-    return 1
+    print("Incorrect script arguments")
+    sys.exit(1)
   
   messages = [entry["message"] for entry in json.loads(commits)]
   for msg in messages:
     if not check_commit_message(msg):
       print("Commit message must begin with your [init letters] and continue with [C for Client] or [D for Daemon] or [master] or [tests]")
-      return 1
+      sys.exit(1)
   print("All commits messages are correct")
   
 

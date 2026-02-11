@@ -2,6 +2,7 @@
 
 import re
 import sys
+import os
 
 def check_pr_title(title: str) -> re.match:
   if not title:
@@ -11,16 +12,15 @@ def check_pr_title(title: str) -> re.match:
     return re.search(r'^\[KS-(master|tests)\]', title)
 
 def main():
-  #title = str(os.getenv("PR_TITLE"))
+  title = str(os.getenv("PR_TITLE"))
   
-  if len(sys.argv) != 2:
+  if not title:
     print("Incorrect script arguments")
-    return 1
-  title = sys.argv[1]
+    sys.exit(1)
   
   if not check_pr_title(title):
     print("Pr title must begin with your [init letters] and continue with [C for Client] or [D for Daemon] or [master] or [tests]")
-    return 1
+    sys.exit(1)
   print("Pr title is correct")
 
 
