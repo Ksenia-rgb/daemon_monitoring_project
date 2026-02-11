@@ -6,6 +6,6 @@ jobs:
     steps:
       - name: Check commit message
         env:
-          COMMITS="${{ toJson(github.event.commits) | jq -r '.[].message' }}""
+          COMMITS=$(echo "${{ toJson(github.event.commits) }}" | jq -r '.[].message')
         run: |
           python -m scripts/test_commit_msg
