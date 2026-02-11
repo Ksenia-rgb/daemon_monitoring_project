@@ -9,7 +9,7 @@ jobs:
       - name: Get pr commits
         run: |
           COMMITS=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-              "${{ github.event.pull_request.commits_url }}" | jq -c '.')
+              "${{ github.event.pull_request.commits_url }}" | jq -c '.[] | .commit')
             
           echo "COMMITS=$COMMITS" >> $GITHUB_ENV
           echo "$COMMITS"
