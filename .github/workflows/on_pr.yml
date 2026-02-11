@@ -18,9 +18,9 @@ jobs:
         env:
           PR_TITLE: "${{ github.event.pull_request.title }}"
         run: |
-          python3 scripts/test_pr.py
+          python3 .github/scripts/test_pr.py
       - name: Check commit message
         env:
           COMMITS: "${{ env.COMMITS }}"
         run: |
-          python3 scripts/test_commit_msg.py
+          python3 .github/scripts/test_commit_msg.py
