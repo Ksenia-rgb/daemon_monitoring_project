@@ -10,6 +10,7 @@ jobs:
         run: |
           cat > test_simple.py << 'EOF'
           #!/usr/bin/env python3
+          import sys
           print("Hello from Python!")
           print(f"Python version: {sys.version}")
           EOF
