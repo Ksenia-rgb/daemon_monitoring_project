@@ -27,5 +27,5 @@ jobs:
           fi
       - name: Check push
         run: |
-          python3 -m scripts/test+commit_msg "${{ toJson(github.event.pull_request.commits) }}"
+          python3 -m scripts/test_commit_msg "${{ toJson(github.event.commits) }}"
       
