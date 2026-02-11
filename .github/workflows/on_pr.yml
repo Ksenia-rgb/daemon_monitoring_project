@@ -12,6 +12,7 @@ jobs:
               "${{ github.event.pull_request.commits_url }}")
             
           echo "COMMITS='$COMMITS_JSON'" >> $GITHUB_ENV
+          echo "'$COMMITS_JSON'"
 
       - name: Check PR title format
         env:
