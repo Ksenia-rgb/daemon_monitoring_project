@@ -7,5 +7,7 @@ jobs:
       - name: Check PR title format
         run: |
           PR_TITLE="${{ github.event.pull_request.title }}"
+          COMMITS="${{ toJson(github.event.pull_request.commits) }}"
 
           python -m scripts/test_pr
+          python -m scripts/test_commit_msg
