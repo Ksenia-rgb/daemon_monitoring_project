@@ -11,7 +11,7 @@ def check_pr_title(title: str) -> re.match:
     return re.search(r'^\[KS-(master|tests)\]', title)
 
 def main():
-  title = os.getenv("PR_TITLE")
+  title = str(os.getenv("PR_TITLE"))
   if not title:
     return 1
   
