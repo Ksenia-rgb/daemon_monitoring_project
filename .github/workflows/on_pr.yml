@@ -6,4 +6,4 @@ jobs:
     steps:
       - name: Check PR title format
         run: |
-          python -m scripts/test_pr
+          python -m ./scripts/test_pr
