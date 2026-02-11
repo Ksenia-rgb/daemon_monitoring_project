@@ -5,7 +5,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check commit message
-        env:
-          COMMITS=$(echo "${{ toJson(github.event.commits) }}" | jq -r '.[].message')
         run: |
+          COMMITS=$(echo "${{ toJson(github.event.commits) }}" | jq -r '.[].message')
           python -m scripts/test_commit_msg
