@@ -1,6 +1,8 @@
+#!/usr/bin/env python3
+
 import re
 import os
-from json import loads
+import json
 
 def check_commit_message(msg: str) -> re.match:
   if not msg:
@@ -14,7 +16,7 @@ def main():
   if not commits:
     return 1
   
-  messages = [entry["message"] for entry in loads(commits)]
+  messages = [entry["message"] for entry in json.loads(commits)]
   for msg in messages:
     if not check_commit_message(msg):
       print("Commit message must begin with your [init letters] and continue with [C for Client] or [D for Daemon] or [master] or [tests]")

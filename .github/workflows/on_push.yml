@@ -6,4 +6,10 @@ jobs:
     steps:
       - name: Check commit message
         run: |
-          python -m ./scripts/test_commit_msg
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            COMMITS="${{ toJson(github.event.commits) }}"
+          else
+            COMMITS="${{ toJson(github.event.pull_request.commits) }}"
+          fi
+          
+          python -m scripts/test_commit_msg

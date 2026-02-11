@@ -6,4 +6,6 @@ jobs:
     steps:
       - name: Check PR title format
         run: |
-          python -m ./scripts/test_pr
+          PR_TITLE="${{ github.event.pull_request.title }}"
+
+          python -m scripts/test_pr
