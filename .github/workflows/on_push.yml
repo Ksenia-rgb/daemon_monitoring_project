@@ -11,4 +11,4 @@ jobs:
         env:
           COMMITS: "${{ toJson(github.event.commits) }}"
         run: |
-          python -m scripts/test_commit_msg
+          python -m scripts/test_commit_msg COMMITS
