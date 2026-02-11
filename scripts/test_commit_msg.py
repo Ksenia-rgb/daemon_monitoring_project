@@ -5,9 +5,11 @@ import os
 import sys
 import json
 
-def check_commit_message(msg: str) -> re.match:
+def check_commit_message(msg: str) -> bool:
   if not msg:
-    return None
+    return False
+  if re.search(r'^Merge', msg):
+    return True
   match = re.search(r'^\[(KS|IL|MI|ST|MA)-(D|C)\]', msg)
   if not match:
     return re.search(r'^\[KS-(master|tests)\]', msg)
