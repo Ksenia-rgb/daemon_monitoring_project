@@ -1,7 +1,7 @@
 name: content in pull_request
 on: pull_request
 jobs:
-  check-pr-title:
+  format:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
