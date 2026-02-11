@@ -3,10 +3,7 @@ on: push
 jobs:
   check-commit-message:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        
+    steps:  
       - name: Check commit message
         run: |
           python -m scripts/test_commit_msg "${{ toJson(github.event.commits) }}"
