@@ -8,17 +8,8 @@ jobs:
       
       - name: Get pr commits
         run: |
-          BEFORE="${{ github.event.before }}"
-            
-          if [ "$BEFORE" != "0000000000000000000000000000000000000000" ]; then
-            COMMITS=$(git log --pretty=format:'{%n  "message": "%s"%n}' \
-              $BEFORE..HEAD | jq -s '.')
-          else
-            git fetch origin ${{ github.event.pull_request.base.ref }}
-            BASE_SHA=$(git merge-base HEAD origin/${{ github.event.pull_request.base.ref }})
-            COMMITS=$(git log --pretty=format:'{%n  "message": "%s"%n}' \
-              $BASE_SHA..HEAD | jq -s '.')
-          fi
+          COMMITS=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              "${{ github.event.pull_request.commits_url }}" | jq -c '[.[] | .commit]')
             
           echo "COMMITS=$COMMITS" >> $GITHUB_ENV
           echo "$COMMITS"
@@ -28,7 +19,7 @@ jobs:
           PR_TITLE: "${{ github.event.pull_request.title }}"
         run: |
           python3 scripts/test_pr.py
-      - name: Check PR commit message
+      - name: Check commit message
         env:
           COMMITS: "${{ env.COMMITS }}"
         run: |
