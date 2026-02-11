@@ -4,8 +4,11 @@ jobs:
   check-commit-message:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
       - name: Check commit message
         env:
           COMMITS: "${{ toJson(github.event.commits) }}"
         run: |
-          python scripts/test_commit_msg.py
+          python -m scripts/test_commit_msg
