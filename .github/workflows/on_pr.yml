@@ -11,8 +11,8 @@ jobs:
           COMMITS=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
               "${{ github.event.pull_request.commits_url }}")
             
-          echo "COMMITS='$COMMITS'" >> $GITHUB_ENV
-          echo "'$COMMITS'"
+          echo "COMMITS=$COMMITS" >> $GITHUB_ENV
+          echo "$COMMITS"
 
       - name: Check PR title format
         env:
