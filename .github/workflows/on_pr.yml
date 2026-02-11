@@ -1,0 +1,15 @@
+name: content in pull_request
+on: pull_request
+jobs:
+  check-pr-title:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Check PR title format
+        env:
+          PR_TITLE: "${{ github.event.pull_request.title }}"
+          COMMITS: "${{ toJson(github.event.pull_request.commits) }}"
+        run: |
+          python3 scripts/test_pr.py
+          python3 scripts/test_commit_msg.py
