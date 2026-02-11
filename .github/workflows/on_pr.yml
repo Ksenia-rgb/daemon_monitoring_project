@@ -24,3 +24,4 @@ jobs:
           COMMITS: "${{ env.COMMITS }}"
         run: |
           python3 .github/scripts/test_commit_msg.py
+          
