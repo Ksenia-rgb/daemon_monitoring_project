@@ -1,7 +1,7 @@
 name: content in push
 on: push
 jobs:
-  check-commit-message:
+  format:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
