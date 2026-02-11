@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import re
-import sys
+import os
 import json
 
 def check_commit_message(msg: str) -> re.match:
@@ -12,11 +12,9 @@ def check_commit_message(msg: str) -> re.match:
     return re.search(r'^\[KS-(master|tests)\]', msg)
 
 def main():
-  #commits = os.getenv("COMMITS")
-  if len(sys.argv) != 2:
-    print("Incorrect script arguments")
+  commits = os.getenv("COMMITS")
+  if not commits:
     return 1
-  commits = sys.argv[1]
   
   messages = [entry["message"] for entry in json.loads(commits)]
   for msg in messages:

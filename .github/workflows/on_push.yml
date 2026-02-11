@@ -6,26 +6,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Create minimal test script
-        run: |
-          cat > test_simple.py << 'EOF'
-          #!/usr/bin/env python3
-          import sys
-          print("Hello from Python!")
-          print(f"Python version: {sys.version}")
-          EOF
-          python3 test_simple.py
-      
-      - name: Try your script
-        run: |
-          if [ -f "scripts/test_commit_msg.py" ]; then
-            echo "Script found, trying to run..."
-            python3 scripts/test_commit_msg.py --help 2>&1 || python3 scripts/test_commit_msg.py "${{ toJson(github.event.commits) }}"
-          else
-            echo "Script NOT found at scripts/test_commit_msg.py"
-            find . -name "*.py"
-          fi
       - name: Check push
+        env:
+          COMMITS: "${{ toJson(github.event.commits) }}"
         run: |
-          python3 scripts/test_commit_msg.py "${{ toJson(github.event.commits) }}"
+          python3 scripts/test_commit_msg.py 
       
