@@ -1,8 +1,8 @@
 #include <iostream>
 #include <cstring>
 
-#include <client.hpp>
-#include <CLI.hpp>
+#include "client.hpp"
+#include "CLI.hpp"
 
 int main(int argc, char ** argv)
 {

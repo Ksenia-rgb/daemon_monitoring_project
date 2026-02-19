@@ -1,4 +1,4 @@
-#include <CLI.hpp>
+#include "CLI.hpp"
 
 #include <string>
 
@@ -22,7 +22,7 @@ void CLI::executeUI() const
   for (size_t i = 0; i < number_of_options; ++i)
   {
     printw("[ ] ");
-    printw(options[i].c_str());
+    printw("%s", options[i].c_str());
     printw("\n");
   }
 
