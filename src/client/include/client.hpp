@@ -13,6 +13,7 @@ public:
   {
     ui_->executeUI();
   }
+  
 protected:
   UI * ui_;
 };
