@@ -3,7 +3,4 @@
 
 #include <client.hpp>
 
-#include <CLI.hpp>
-#include <UI.hpp>
-
 #endif

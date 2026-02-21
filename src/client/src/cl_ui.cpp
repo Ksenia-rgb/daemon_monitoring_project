@@ -1,10 +1,15 @@
-#include "CLI.hpp"
+#include <cl_ui.hpp>
 
 #include <string>
 
 #include <ncurses.h>
 
-void CLI::executeUI() const
+CLI::~CLI()
+{
+  endwin();
+}
+
+void CLI::run(const MenuItems & items) const
 {
   initscr();
   raw();
@@ -15,14 +20,12 @@ void CLI::executeUI() const
   printw("Select options:\n");
 
   size_t row = 2;
-
-  size_t number_of_options = 2;
-  std::string options[] = {"Get monitoring data", "Exit Application"};
+  size_t number_of_options = items.size();
 
   for (size_t i = 0; i < number_of_options; ++i)
   {
     printw("[ ] ");
-    printw("%s", options[i].c_str());
+    printw("%s", items[i].name.c_str());
     printw("\n");
   }
 
@@ -50,5 +53,4 @@ void CLI::executeUI() const
   attroff(A_BOLD);
 
   refresh();
-  endwin();
 }

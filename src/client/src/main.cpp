@@ -1,21 +1,20 @@
 #include <iostream>
 #include <cstring>
+#include <memory>
 
-#include "client.hpp"
-#include "CLI.hpp"
+#include <client.hpp>
+#include <cl_ui.hpp>
 
 int main(int argc, char ** argv)
 {
-  UI * current = nullptr;
-  Client * cl = nullptr;
-
+  std::unique_ptr< UI > current_ui;
   try
   {
     if (argc > 1)
     {
       if (std::strcmp(argv[1], "--cmd") == 0)
       {
-        current = new CLI;
+        current_ui = std::make_unique< CLI >();
       }
       else
       {
@@ -25,23 +24,15 @@ int main(int argc, char ** argv)
     }
     else
     {
-      current = new CLI; //default
+      current_ui = std::make_unique< CLI >();
     }
     
-    Client * cl = new Client(current);
-
-    cl->useUI();
-
-    delete cl;
-    delete current;
+    auto client = std::make_unique< Client >(std::move(current_ui));
+    client->run();
   }
   catch (...)
   {
     std::cerr << "unexpected error\n";
-
-    delete cl;
-    delete current;
-
     return 2;
   }
 }
