@@ -3,7 +3,7 @@
 #include <memory>
 
 #include <client.hpp>
-#include <cl_ui.hpp>
+#include <cl-ui.hpp>
 
 int main(int argc, char ** argv)
 {
