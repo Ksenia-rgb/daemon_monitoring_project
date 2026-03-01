@@ -22,10 +22,10 @@ void CLI::run(const MenuItems & items) const
   size_t row = 2;
   size_t number_of_options = items.size();
 
-  for (size_t i = 0; i < number_of_options; ++i)
+  for (auto it = items.begin(); it != items.end(); ++it)
   {
     printw("[ ] ");
-    printw("%s", items[i].name.c_str());
+    printw("%s", it->first);
     printw("\n");
   }
 

@@ -4,6 +4,7 @@
 
 #include <client.hpp>
 #include <cl-ui.hpp>
+#include <tui.hpp>
 
 int main(int argc, char ** argv)
 {
@@ -16,9 +17,13 @@ int main(int argc, char ** argv)
       {
         current_ui = std::make_unique< CLI >();
       }
+      if (std::strcmp(argv[1], "--tui") == 0)
+      {
+        current_ui = std::make_unique< TUI >();
+      }
       else
       {
-        std::cerr << "error: unknown flag " << argv[1] << ". use --cmd\n";
+        std::cerr << "error: unknown flag " << argv[1] << ". use --cmd, --tui\n";
         return 1;
       }
     }

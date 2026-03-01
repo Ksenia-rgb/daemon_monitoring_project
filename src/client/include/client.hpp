@@ -15,13 +15,12 @@ public:
   {}
   void run() const
   {
-    MenuItems items = {
-      {"Get monitoring data", [this]() {getMonitoringData(); return false;}},
-      {"Exit Application", [this]() {return true;}}
-    };
+    MenuItems items;
+    items["get_monitoring_data"] = [this](void * url) {getMonitoringData(reinterpret_cast<char *>(url)); return false;};
+    items["quit"] = [this](void *) {return true;};
     ui_->run(items);
   }
-  void getMonitoringData() const
+  void getMonitoringData(char * url) const
   {
     std::cout << "Monitoring!\n";
   };

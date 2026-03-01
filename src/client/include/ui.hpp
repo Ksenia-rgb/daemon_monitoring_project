@@ -1,16 +1,16 @@
 #ifndef UI_HPP
 #define UI_HPP
 
-#include <vector>
+#include <unordered_map>
 #include <string>
-
+/*
 struct MenuItem
 {
   std::string name;
   std::function< bool() > action;
 };
-
-using MenuItems = std::vector< MenuItem >;
+*/
+using MenuItems = std::unordered_map< const char *, std::function< bool(void *) > >;
 
 class UI
 {
