@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Get pr commits
         run: |
           COMMITS=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
@@ -24,4 +24,3 @@ jobs:
           COMMITS: "${{ env.COMMITS }}"
         run: |
           python3 .github/scripts/test_commit_msg.py
-          
