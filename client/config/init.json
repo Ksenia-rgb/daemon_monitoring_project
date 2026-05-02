@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "metrics_filepath": "client/metrics/",
+  "default_thresholds": {
+    "cpu": { "usage": 80, "temperature": 90 },
+    "ram": { "usage": 80 }
+  },
+  "servers": [
+    {
+      "name": "server-a",
+      "url": "/server-a/metrics",
+      "thresholds": {
+        "cpu": [
+          {
+            "type": "usage",
+            "value": 85,
+            "success_compare": -1
+          }
+        ],
+        "disk_hdd": [
+          {
+            "type": "usage",
+            "value": 85,
+            "success_compare": -1
+          },
+          {
+            "type": "latency_ms",
+            "value": 30,
+            "success_compare": -1
+          }
+        ],
+        "gpu": [
+          {
+            "type": "usage",
+            "value": 100,
+            "success_compare": -1
+          },
+          {
+            "type": "temperature",
+            "value": 65,
+            "success_compare": -1
+          },
+          {
+            "type": "vram_usage",
+            "value": 50,
+            "success_compare": -1
+          }
+        ]
+      }
+    },
+    {
+      "name": "server-b",
+      "url": "/server-b/metrics",
+      "thresholds": {
+        "cpu": [
+          {
+            "type": "usage",
+            "value": 85,
+            "success_compare": 1
+          }
+        ],
+        "sata_dvd": [{
+            "type": "usage",
+            "value": 85,
+            "success_compare": -1
+          },
+          {
+            "type": "speed",
+            "value": 20,
+            "success_compare": 0
+          }
+        ]
+      }
+    }
+  ]
+}
