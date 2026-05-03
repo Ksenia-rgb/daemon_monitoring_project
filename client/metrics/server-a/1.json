@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "id": 8374830,
+  "name": "server-a",
+  "interval_value": 10,
+  "interval_units": "s",
+  "metrics": [
+    {
+      "time": "2026-01-15T10:30:40Z",
+      "data":
+      {
+        "cpu": { "usage": 77 },
+        "disk_hdd": { "usage": 44, "latency_ms": 56 },
+        "gpu": { "usage": 67, "temperature": 60, "vram_usage": 45 }
+      }
+    },
+    {
+      "time": "2026-01-15T10:30:50Z",
+      "data":
+      {
+        "cpu": { "usage": 76 },
+        "disk_hdd": { "usage": 43, "latency_ms": 58 },
+        "gpu": { "usage": 64, "temperature": 53, "vram_usage": 32 }
+      }
+    }
+  ]
+}
