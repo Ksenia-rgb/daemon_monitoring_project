@@ -1,27 +1,8 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.30)
 project(DaemonMonitoringProject LANGUAGES CXX)
-
-cmake_policy(SET CMP0167 NEW)
-cmake_policy(SET CMP0144 NEW)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-include(FetchContent)
-FetchContent_Declare(
-  httplib
-  GIT_REPOSITORY https://github.com/yhirose/cpp-httplib.git
-  GIT_TAG v0.18.7
-)
-FetchContent_MakeAvailable(httplib)
-
-include(FetchContent)
-FetchContent_Declare(
-  json
-  GIT_REPOSITORY https://github.com/nlohmann/json.git
-  GIT_TAG v3.12.0
-)
-FetchContent_MakeAvailable(json)
 
 set(PROGRAMS client daemon storage)
 
@@ -32,8 +13,8 @@ foreach(prog ${PROGRAMS})
     add_executable(${prog} ${PROGRAM_SOURCES})
     target_include_directories(${prog} PRIVATE
       ${prog}/include
+      libs
     )
-    target_link_libraries(${prog} PRIVATE httplib::httplib PRIVATE nlohmann_json::nlohmann_json)
   endif()
 endforeach()
 
@@ -57,9 +38,9 @@ if(BUILD_TESTS)
         )
         target_include_directories(test-${prog} PRIVATE
           ${prog}/include
+          libs
           ${Boost_INCLUDE_DIRS}
         )
-        target_compile_definitions(test-${prog} PRIVATE BOOST_TEST_HEADER_ONLY)
         add_test(NAME test-${prog} COMMAND test-${prog})
       endif()
     endforeach()
