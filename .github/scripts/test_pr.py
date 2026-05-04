@@ -7,7 +7,7 @@ import os
 def check_pr_title(title: str) -> re.match:
   if not title:
     return None
-  return re.search(r'^\[(client|deamon|master|tests)\]', title)
+  return re.search(r'^\[(client|daemon|master|tests)\]', title)
 
 def main():
   title = str(os.getenv("PR_TITLE"))

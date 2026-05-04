@@ -10,7 +10,7 @@ def check_commit_message(msg: str) -> bool:
     return False
   if re.search(r'^Merge', msg):
     return True
-  return re.search(r'^\[(client|deamon|master|tests)\]', msg)
+  return re.search(r'^\[(client|daemon|master|tests)\]', msg)
 
 def main():
   commits = os.getenv("COMMITS")
