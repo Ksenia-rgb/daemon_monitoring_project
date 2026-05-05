@@ -4,17 +4,18 @@
 #include <vector>
 #include <string>
 
-using MenuItems = std::unordered_map< std::string, std::function< bool(void *) > >;
+#include "common-types.hpp"
 
 class UI
 {
 public:
+  using command_handler = std::function< void(const std::vector< std::string > &) >;
   virtual ~UI() = default;
-  virtual void run(const MenuItems & items) = 0;
 
-  virtual void updateServerList(std::map< std::string, ServerInfo > servers) = 0;
+  virtual void registerCommand(const std::string & name, command_handler handler) = 0;
+  virtual void run() = 0;
 
- // virtual void updateServerMetrics(MetricsPackage) = 0;
+  virtual void updateServers(std::map< std::string, ServerInfo > servers) = 0;
 };
 
 #endif
