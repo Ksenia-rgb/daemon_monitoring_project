@@ -2,53 +2,48 @@
 
 void Client::run()
 {
-  MenuItems items;
-  items["refresh_servers"] = { [this](void *)
+  ui_->registerCommand("update_servers", [this](const std::vector< std::string > &)
   {
-    refreshServerInfoList();
-    return false;
-  }};
-  //items["get_metrics"] = { [this](void * metrics)
-  //{
-  //  refreshServerMetrics(metrics);
-  //  return false;
-  //}};
-    //{"get_monitoring_data", [this](void * url) {getMonitoringData(reinterpret_cast< char * >(url)); return false;}},
-  items["quit"] = { [this](void *)
+    loadConfig();
+  });
+  ui_->registerCommand("refresh_metric_for", [this](const std::vector< std::string > & name)
   {
-    return true;
-  }};
-  ui_->run(items);
+    if (name.size())
+    {
+      refreshMetricsFor(name[0]);
+    }
+  });
+  ui_->run();
 }
 
-void Client::showServerInfoList()
+void Client::loadConfig()
 {
-  ui_->updateServerList(si_.getServerInfos());
+  config_ = std::make_unique< ConfigFile >("/home/faxryzen/projects/daemon_monitoring_project/client/config/init.json");
+  ui_->updateServers(config_.get()->getServerInfoMap());
 }
 
-void Client::refreshServerInfoList()
-{
-  si_.update();
-  ui_->updateServerList(si_.getServerInfos());
-}
-
-void Client::showServerMetrics(const std::string & server_name)
-{
-
-}
-void Client::showServerMetricsList()
-{
-
-}
-
-void Client::refreshServerMetrics(const std::string & server_name)
-{
-  MetricsPackage metrics{server_name, si_.getMetricsFilePath() + server_name};
-  //ui_->updateServerMetrics(metrics);
-}
-
-void Client::refreshServerMetricsList()
+void Client::refreshAllMetrics()
 {
   
+}
+
+void Client::refreshMetricsFor(const std::string & server_name)
+{
+  MetricsPackage metrics;
+  //todo: check for config existing
+  metrics.load(config_.get()->getMetricsFilePath() + server_name);
+  //todo: comparing with critical values
+  auto temp = metrics.getServerMetrics();
+  std::vector< std::pair< std::chrono::system_clock::time_point, metric_value > > result;
+  for (size_t i = 0; i < temp.size(); ++i)
+  {
+    for (size_t j = 0; j < temp[0].metrics.size(); ++j)
+    {
+      //todo safety and smarter blyat interface because this so complicated..
+      result.push_back({temp[i].metrics[j].time, temp[i].metrics[j].data["gpu"]["usage"]});
+    }
+  }
+
+  ui_->updateMetricGraph(server_name, "GPU USAGE", result);
 }
 

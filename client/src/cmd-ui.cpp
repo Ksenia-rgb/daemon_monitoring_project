@@ -2,50 +2,41 @@
 
 #include <iostream>
 
-void CMDUI::run(const MenuItems & items)
+void CMDUI::registerCommand(const std::string & name, command_handler handler)
 {
-  std::cout << "== commands ==\n";
-  for (auto item: items)
+  commands_[name] = handler;
+}
+
+void CMDUI::run()
+{
+  std::cout << "I'm Alive...\n";
+  commands_.at("update_servers")({});
+  commands_.at("refresh_metric_for")({"server-a"});
+}
+
+void CMDUI::updateServers(std::map< std::string, ServerInfo > servers)
+{
+  for (auto it = servers.begin(); it != servers.end(); ++it)
   {
-    std::cout << item.first << '\n';
-  }
-  std::cout << "> ";
-  for (std::string command; std::cin >> command;)
-  {
-    try
-    {
-      bool exit = items.at(command)(nullptr);
-      if (exit)
-      {
-        std::cout << "exiting..\n";
-        return;
-      }
-    }
-    catch(const std::out_of_range &)
-    {
-      std::cout << "There is no such command\n";
-    }
-    std::cout << "> ";
+    std::cout << "server: " << it->first << " with " << it->second.url << "\n";
   }
 }
 
-void CMDUI::updateServerList(std::map< std::string, ServerInfo > servers)
+void CMDUI::updateMetricGraph
+(
+  const std::string & name,
+  const std::string & pc_part,
+  std::vector< std::pair< std::chrono::system_clock::time_point, metric_value > > values
+)
 {
-  std::cout << "== servers info ==\n";
-  size_t i = 1;
-  for (auto it = servers.begin(); it != servers.end(); ++it)
+  std::cout << "metrics from " << name << ":\n";
+  std::cout << "== " << pc_part << " ==\n";
+  for (const auto & metric: values)
   {
-    std::cout << i++ << ". " << it->first << " with url: " << it->second.url << '\n';
+    auto time_t = std::chrono::system_clock::to_time_t(metric.first);
+    std::stringstream ss;
+    ss << std::put_time(std::localtime(&time_t), "%Y-%m-%d %H:%M:%S");
+    //LMAO C++ FUCKIN SUCKS
+    std::cout << ss.str() << " | " << metric.second << '\n';
   }
 }
-/*
-void CMDUI::updateServerMetrics(MetricsPackage metrics)
-{
-  std::cout << "== metrics info ==\n";
-  size_t i = 1;
-  for (auto it = metrics.begin(); it != metrics.end(); ++it)
-  {
-    std::cout << i++ << ". " << it->first << " with url: " << it->second.url << '\n';
-  }
-}
-*/
