@@ -1,7 +1,7 @@
 #ifndef MODELS_HPP
 #define MODELS_HPP
 #include <string>
-#include <nlohmann.hpp>
+#include <json.hpp>
 
 namespace models
 {
