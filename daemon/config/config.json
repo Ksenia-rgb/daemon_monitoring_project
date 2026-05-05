@@ -1,0 +1,12 @@
+{
+  "server_name": "server-a",
+  "monitor_interval": 1,
+  "repeat_interval": 10,
+  "send_interval": 5,
+  "min_send_interval": 1,
+  "send_strategy": {
+      "url": "metrics/",
+      "endpoint": "server-a/1.json"
+  },
+  "max_batch_size": 10
+}
