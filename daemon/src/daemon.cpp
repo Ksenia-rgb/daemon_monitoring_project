@@ -1,12 +1,11 @@
-#include "../include/daemon.hpp"
-
+#include "daemon.hpp"
 #include <chrono>
 #include <iostream>
-
-#include "../include/collector.hpp"
-#include "../include/collector-linux.hpp"
-#include "../include/collector-win.hpp"
-
+#include <fstream>
+#include <thread>
+#include "collector.hpp"
+#include "collector-linux.hpp"
+#include "collector-win.hpp"
 
 namespace
 {
@@ -33,51 +32,146 @@ namespace
   }
 }
 
-Daemon::Daemon(double monitor_interval, double repeat_interval, double send_interval,
-    double min_send_strategy, SendStrategy send_strategy, double max_batch_size):
-  monitor_interval_(monitor_interval),
-  repeat_interval_(repeat_interval),
-  send_interval_(send_interval),
-  min_send_interval_(min_send_strategy),
-  send_strategy_(send_strategy),
-  max_batch_size_(max_batch_size),
-  send_buffer(),
-  repeat_send_buffer()
+Daemon::Daemon(const models::DaemonConfig& config):
+  monitor_interval_(config.monitor_interval),
+  repeat_interval_(config.repeat_interval),
+  send_interval_(config.send_interval),
+  min_send_interval_(config.min_send_interval),
+  send_strategy_(config.send_strategy),
+  max_batch_size_(config.max_batch_size),
+  send_buffer_(),
+  repeat_buffer_(),
+  running(false),
+  buffer_mtx_(),
+  repeat_mtx_(),
+  send_mtx_()
 {}
-void Daemon::run()
-{
-  /*
-  1 thread: собирать метрики, записывать в send_buffer
-  2 thread: забирать из send_buffer, отправлять, класть в repeat_buffer
-  3 thread: забирать из repeat_buffer, отправлять повторно
-  4 thread: возможно, контролировать метрики, вызывать отправку при превышении порога
-  */
 
-  
+void Daemon::start()
+{
+  running = true;
 }
-Daemon::MetricMap Daemon::getMetrics() const
+void Daemon::runCollect()
+{
+  std::chrono::seconds interval(monitor_interval_);
+
+  while (running)
+  {
+    std::pair< MetricMap, std::string > metric = getMetrics();
+    nlohmann::json json_metric = makeJson(metric.first, metric.second);
+    pushMetric(json_metric);
+
+    std::this_thread::sleep_for(interval);
+  }
+}
+void Daemon::runSend()
+{
+  std::chrono::seconds interval(send_interval_);
+
+  while (running)
+  {
+    MetricBatch batch = collectMetricBatch();
+    if (!batch.empty())
+    {
+      nlohmann::json json_batch = makeJsonBatch(batch);
+      send(json_batch);
+    }
+
+    std::this_thread::sleep_for(interval);
+  }
+}
+void Daemon::runRepeat()
+{
+  std::chrono::seconds interval(repeat_interval_);
+ 
+  while (running)
+  {
+    MetricBatch batch = collectRepeatBatch();
+    if (!batch.empty())
+    {
+      nlohmann::json json_batch = makeJsonBatch(batch);
+      send(json_batch);
+    }
+
+    std::this_thread::sleep_for(interval);
+  }
+}
+void Daemon::stop()
+{
+  running = false;
+}
+void Daemon::remainingCases()
+{
+  while (!send_buffer_.empty())
+  {
+    MetricBatch last_batch = collectMetricBatch();
+    if (!last_batch.empty())
+    {
+      nlohmann::json json_batch = makeJsonBatch(last_batch);
+      send(json_batch);
+    }
+  }
+  while (!repeat_buffer_.empty())
+  {
+    MetricBatch last_batch = collectRepeatBatch();
+    if (!last_batch.empty())
+    {
+      nlohmann::json json_batch = makeJsonBatch(last_batch);
+      send(json_batch);
+    }
+  }
+}
+std::pair< Daemon::MetricMap, std::string > Daemon::getMetrics() const
 {
   Collector * collector = getPlatformCollector();
   if (!collector)
   {
-    throw std::logic_error("unsupported platform");
+    throw std::logic_error("<Error> unsupported platform");
   }
   MetricMap res = collector->getMetrics();
   delete collector;
-  return res;
+  return {res, getUtcTimestamp()};
 }
-Daemon::MetricBatch Daemon::formMetricBatch()
+Daemon::MetricBatch Daemon::collectMetricBatch()
 {
-  if (send_buffer.size() < max_batch_size_) {
+  if (send_buffer_.empty())
+  {
     return {};
   }
   MetricBatch batch;
-  for (size_t i = 0; i < max_batch_size_; i++) {
-    batch.push_back(send_buffer.front());
-    repeat_send_buffer.push(send_buffer.front());
-    send_buffer.pop();
+
+  std::lock_guard< std::mutex > buffer_locker(buffer_mtx_);
+  std::lock_guard< std::mutex > repeat_locker(repeat_mtx_);
+
+  while (batch.size() < max_batch_size_ && !send_buffer_.empty())
+  {
+    batch.push_back(send_buffer_.front());
+    repeat_buffer_.push(send_buffer_.front());
+    send_buffer_.pop();
   }
   return batch;
+}
+Daemon::MetricBatch Daemon::collectRepeatBatch()
+{
+  if (repeat_buffer_.empty())
+  {
+    return {};
+  }
+  MetricBatch batch;
+
+  std::lock_guard< std::mutex > repeat_locker(repeat_mtx_);
+
+  while (batch.size() < max_batch_size_ && !repeat_buffer_.empty())
+  { 
+    batch.push_back(repeat_buffer_.front());
+    repeat_buffer_.pop();
+  }
+  return batch;
+}
+void Daemon::pushMetric(const nlohmann::json& metric)
+{
+  std::lock_guard< std::mutex > locker(buffer_mtx_);
+  send_buffer_.push(metric);
 }
 nlohmann::json Daemon::makeJson(const MetricMap& metric, const std::string& time) const
 {
@@ -100,5 +194,11 @@ nlohmann::json Daemon::makeJsonBatch(const MetricBatch& metric) const
 }
 void Daemon::send(const nlohmann::json& batch)
 {
-  std::cout << batch.dump(2) << '\n';
+  std::lock_guard< std::mutex > locker(send_mtx_);
+  std::ofstream fout(send_strategy_.url + send_strategy_.endpoint, std::ios::app);
+  if (!fout.is_open())
+  {
+    return;
+  }
+  fout << batch.dump(2) << '\n';
 }

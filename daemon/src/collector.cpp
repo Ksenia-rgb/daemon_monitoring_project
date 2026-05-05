@@ -1,4 +1,4 @@
-#include "../include/collector.hpp"
+#include "collector.hpp"
 
 Collector::MetricMap Collector::getMetrics() const
 {

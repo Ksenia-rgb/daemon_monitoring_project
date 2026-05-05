@@ -8,7 +8,7 @@
 #include <chrono>
 #include <map>
 
-#include <nlohmann/json.hpp>
+#include <nlohmann.hpp>
 
 namespace fs = std::filesystem;
 

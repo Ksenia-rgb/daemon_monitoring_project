@@ -1,4 +1,4 @@
-#include "../include/collector-linux.hpp"
+#include "collector-linux.hpp"
 
 double CollectorLinux::getCpuUsage() const
 {

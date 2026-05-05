@@ -1,4 +1,4 @@
-#include "../include/collector-win.hpp"
+#include "collector-win.hpp"
 
 double CollectorWin::getCpuUsage() const
 {
