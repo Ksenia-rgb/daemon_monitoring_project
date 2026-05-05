@@ -14,7 +14,8 @@ hidecmd := @
 endif
 # The variable SILENT controls additional messages
 
-CPPFLAGS += -Wall -Wextra -Werror -Wno-missing-field-initializers -Werror=vla -Wold-style-cast $(if $(BOOST_LOCATION),-isystem $(BOOST_LOCATION))
+CPPFLAGS_WARNING += -Wall -Wextra -Werror -Wno-missing-field-initializers -Werror=vla -Wold-style-cast $(if $(BOOST_LOCATION),-isystem $(BOOST_LOCATION))
+CPPFLAGS += $(if $(BOOST_LOCATION),-isystem $(BOOST_LOCATION))
 CXXFLAGS += -g
 
 system   := $(shell uname)

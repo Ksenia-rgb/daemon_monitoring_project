@@ -15,6 +15,13 @@ foreach(prog ${PROGRAMS})
       ${CMAKE_SOURCE_DIR}/${prog}/include
       ${CMAKE_SOURCE_DIR}/libs
     )
+    target_link_libraries(${prog} PRIVATE ws2_32)
+    if(WIN32)
+      target_compile_options(${prog} PRIVATE
+        -D_WIN32_WINNT=0x0A00
+        -lws2_32
+      )
+    endif()
   endif()
 endforeach()
 
