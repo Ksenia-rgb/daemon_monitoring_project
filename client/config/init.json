@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "metrics_filepath": "client/metrics/",
+  "metrics_filepath": "/home/faxryzen/projects/daemon_monitoring_project/client/metrics/",
   "default_thresholds": {
     "cpu": { "usage": 80, "temperature": 90 },
     "ram": { "usage": 80 }

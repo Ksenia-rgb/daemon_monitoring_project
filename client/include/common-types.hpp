@@ -8,6 +8,11 @@
 #include <vector>
 
 using metric_value = std::variant< int, float, bool, std::string >;
+inline std::ostream & operator<<(std::ostream & os, const metric_value & val)
+{
+  std::visit([& os](const auto & v){ os << v; }, val);
+  return os;
+}
 
 struct Threshold
 {

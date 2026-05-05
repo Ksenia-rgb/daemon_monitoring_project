@@ -30,13 +30,13 @@ ConfigFile::ConfigFile(const std::string & filepath)
 
 void ConfigFile::loadFile(const std::string & filepath)
 {
-  std::ifstream raw_cfg(filepath);
-  if (!raw_cfg)
-  {
-    throw std::runtime_error("cannot open config file");
-  }
   try
   {
+    std::ifstream raw_cfg(filepath);
+    if (!raw_cfg)
+    {
+      throw std::runtime_error("cannot open config file");
+    }
     auto cfg = json::parse(raw_cfg);
 
     std::map< std::string, ServerInfo > servers;
