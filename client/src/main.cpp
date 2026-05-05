@@ -4,7 +4,6 @@
 
 #include "client.hpp"
 #include "cmd-ui.hpp"
-#include "managers.hpp"
 
 int main(int argc, char ** argv)
 {
@@ -28,13 +27,13 @@ int main(int argc, char ** argv)
       current_ui = std::make_unique< CMDUI >();
     }
 
-    auto client = std::make_unique< Client >(std::move(current_ui), "client/config/init.json");
+    auto client = std::make_unique< Client >(std::move(current_ui));
 
     client->run();
   }
   catch (const std::exception & e)
   {
-    std::cerr << e.what();
+    std::cerr << e.what() << '\n';
     return 2;
   }
 }

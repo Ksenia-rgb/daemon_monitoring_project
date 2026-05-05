@@ -7,12 +7,18 @@
 
 class CMDUI: public UI
 {
+  std::map< std::string, command_handler > commands_;
 public:
-  void run(const MenuItems & items) override;
+  void registerCommand(const std::string & name, command_handler handler) override;
+  void run() override;
 
-  void updateServerList(std::map< std::string, ServerInfo > servers);
-
- // void updateServerMetrics(MetricsPackage metrics);
+  void updateServers(std::map< std::string, ServerInfo > servers) override;
+  void updateMetricGraph
+  (
+    const std::string & name,
+    const std::string & pc_part,
+    std::vector< std::pair< std::chrono::system_clock::time_point, metric_value > > values
+  ) override;
 };
 
 #endif
