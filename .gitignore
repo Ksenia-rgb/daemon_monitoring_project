@@ -1,6 +1,6 @@
 # built files
 build
+out
 
 # local configuration
 .vscode
-out
