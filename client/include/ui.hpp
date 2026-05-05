@@ -9,7 +9,7 @@
 class UI
 {
 public:
-  using command_handler = std::function< void(const std::vector< std::string > &) >;
+  using command_handler = std::function< void() >;
   virtual ~UI() = default;
 
   virtual void registerCommand(const std::string & name, command_handler handler) = 0;

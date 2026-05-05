@@ -8,9 +8,27 @@ void CMDUI::registerCommand(const std::string & name, command_handler handler)
 
 void CMDUI::run()
 {
-  std::cout << "I'm Alive...\n";
-  commands_.at("update_servers")({});
-  commands_.at("refresh_metric_for")({"server-a"});
+  // std::cout << "I'm Alive...\n";
+  // commands_.at("update_servers")({});
+  // commands_.at("refresh_metric_for")({"server-a"});
+  std::cout << "== commands ==\n";
+  for (auto item : commands_)
+  {
+    std::cout << item.first << '\n';
+  }
+  std::cout << "> ";
+  for (std::string command; std::cin >> command;)
+  {
+    try
+    {
+      commands_.at(command);
+    }
+    catch (const std::out_of_range &)
+    {
+      std::cout << "There is no such command\n";
+    }
+    std::cout << "> ";
+  }
 }
 
 void CMDUI::updateServers(std::map< std::string, ServerInfo > servers)

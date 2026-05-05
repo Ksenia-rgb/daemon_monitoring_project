@@ -1,4 +1,5 @@
 #include "client.hpp"
+#include <httplib.h>
 
 Client::Client(std::unique_ptr< UI > ui):
   ui_(std::move(ui))
@@ -6,19 +7,46 @@ Client::Client(std::unique_ptr< UI > ui):
 
 void Client::run()
 {
+  httplib::Client client("http://localhost:8080");
+
   ui_->registerCommand("update_servers",
-      [this](const std::vector< std::string > &)
+      [this]()
       {
         loadConfig();
       });
   ui_->registerCommand("refresh_metric_for",
-      [this](const std::vector< std::string > & name)
+      [this]()
       {
-        if (name.size())
+        int name_number = 0;
+        std::cin >> name_number;
+        std::string name;
+        for (int i = 0; i < name_number; ++i)
         {
-          refreshMetricsFor(name[0]);
+          std::cin >> name;
+          refreshMetricsFor(name);
         }
       });
+  ui_->registerCommand("hi",
+      [this, &client]()
+      {
+        auto res = client.Get("/hi");
+        if (res)
+        {
+          std::cout << res->status << std::endl;
+          std::cout << res->body << std::endl;
+        }
+      });
+  ui_->registerCommand("post",
+      [this, &client]()
+      {
+        auto res = client.Post("/post", "Hello, Server!", "text/plain");
+        if (res)
+        {
+          std::cout << res->status << std::endl;
+          std::cout << res->body << std::endl;
+        }
+      });
+
   ui_->run();
 }
 
