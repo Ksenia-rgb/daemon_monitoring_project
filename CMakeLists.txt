@@ -1,9 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
 project(DaemonMonitoringProject LANGUAGES CXX)
 
-cmake_policy(SET CMP0167 NEW)
-cmake_policy(SET CMP0144 NEW)
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -59,7 +56,7 @@ if(BUILD_TESTS)
           ${prog}/include
           ${Boost_INCLUDE_DIRS}
         )
-        target_compile_definitions(test-${prog} PRIVATE BOOST_TEST_HEADER_ONLY)
+        target_link_libraries(test-${prog} PRIVATE BOOST_TEST_HEADER_ONLY)
         add_test(NAME test-${prog} COMMAND test-${prog})
       endif()
     endforeach()
