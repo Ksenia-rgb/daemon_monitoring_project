@@ -1,14 +1,12 @@
 #ifndef FILE_READERS_HPP
 #define FILE_READERS_HPP
 
-#include <unordered_set>
 #include <filesystem>
-#include <iostream>
 #include <fstream>
-
-#include <nlohmann/json.hpp>
-
+#include <iostream>
+#include <json.hpp>
 #include "common-types.hpp"
+#include <unordered_set>
 
 namespace fs = std::filesystem;
 
@@ -18,12 +16,6 @@ metric_value jsonToVariant(const json & j);
 
 class ConfigFile
 {
-private:
-  std::string config_filepath_;
-  std::string metrics_filepath_;
-  std::map< std::string, ServerInfo > servers_;
-
-  void loadFile(const std::string & filepath);
 public:
   ConfigFile() = default;
   ConfigFile(const std::string & filepath);
@@ -37,18 +29,17 @@ public:
   bool hasServer(const std::string & server_name) const noexcept;
   const ServerInfo & getServerInfo(const std::string & server_name) const;
   const std::map< std::string, ServerInfo > & getServerInfoMap() const noexcept;
+
+private:
+  std::string config_filepath_;
+  std::string metrics_filepath_;
+  std::map< std::string, ServerInfo > servers_;
+
+  void loadFile(const std::string & filepath);
 };
 
 class MetricsPackage
 {
-private:
-  std::string server_name_ = "";
-  std::string metrics_dir_path_ = "";
-  std::vector< MetricsFile > metrics_;
-  std::unordered_set< std::string > files_;
-  std::vector< std::string > errors_;
-
-  MetricsFile loadFile(const std::string & filepath);
 public:
   MetricsPackage() = default;
   void load(const std::string & filepath_to_dir_or_file);
@@ -59,6 +50,15 @@ public:
 
   const std::vector< std::string > & traceErrors() const noexcept;
   void clearErrors() noexcept;
+
+private:
+  std::string server_name_ = "";
+  std::string metrics_dir_path_ = "";
+  std::vector< MetricsFile > metrics_;
+  std::unordered_set< fs::path > files_;
+  std::vector< std::string > errors_;
+
+  MetricsFile loadFile(const std::string & filepath);
 };
 
 #endif

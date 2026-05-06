@@ -1,5 +1,4 @@
 #include "file-readers.hpp"
-
 #include <set>
 
 metric_value jsonToVariant(const json & j)
@@ -41,22 +40,18 @@ void ConfigFile::loadFile(const std::string & filepath)
 
     std::map< std::string, ServerInfo > servers;
 
-    for (const auto & serv: cfg["servers"])
+    for (const auto & serv : cfg["servers"])
     {
-      ServerInfo opt
-      {
-        .name = serv["name"],
-        .url = serv["url"]
-      };
-      for (const auto & [pc_part, pc_part_metrics]: serv["thresholds"].items())
+      ServerInfo opt{.name = serv["name"], .url = serv["url"]};
+      for (const auto & [pc_part, pc_part_metrics] : serv["thresholds"].items())
       {
         std::map< std::string, Threshold > temp;
-        for (const auto & metric: pc_part_metrics)
+        for (const auto & metric : pc_part_metrics)
         {
           temp[metric["type"]] = {
-            .type = metric["type"],
-            .value = jsonToVariant(metric["value"]),
-            .success_compare = metric["success_compare"],
+              .type = metric["type"],
+              .value = jsonToVariant(metric["value"]),
+              .success_compare = metric["success_compare"],
           };
         }
         opt.thresholds[pc_part] = std::move(temp);
@@ -124,14 +119,11 @@ MetricsFile MetricsPackage::loadFile(const std::string & filepath)
     }
     auto package = json::parse(raw_package);
 
-    MetricsFile current
-    {
-      .version = package["version"],
-      .id = package["id"],
-      .name = package["name"],
-      .interval_value = package["interval_value"],
-      .interval_units = package["interval_units"]
-    };
+    MetricsFile current{.version = package["version"],
+        .id = package["id"],
+        .name = package["name"],
+        .interval_value = package["interval_value"],
+        .interval_units = package["interval_units"]};
 
     if (current.version != 1)
     {
@@ -147,7 +139,7 @@ MetricsFile MetricsPackage::loadFile(const std::string & filepath)
       throw std::runtime_error("files should have same server name");
     }
 
-    for (const auto & metric: package["metrics"])
+    for (const auto & metric : package["metrics"])
     {
       std::tm tm = {};
       std::istringstream ss(metric["time"].get< std::string >());
@@ -159,14 +151,11 @@ MetricsFile MetricsPackage::loadFile(const std::string & filepath)
       std::time_t tt = std::mktime(&tm);
       auto tp = std::chrono::system_clock::from_time_t(tt);
 
-      Metric opt
-      {
-        .time = tp
-      };
-      for (const auto & [pc_part, pc_part_metrics]: metric["data"].items())
+      Metric opt{.time = tp};
+      for (const auto & [pc_part, pc_part_metrics] : metric["data"].items())
       {
         std::map< std::string, metric_value > temp;
-        for (const auto & [metric_key, metric_value]: pc_part_metrics.items())
+        for (const auto & [metric_key, metric_value] : pc_part_metrics.items())
         {
           temp[metric_key] = jsonToVariant(metric_value);
         }
@@ -200,7 +189,7 @@ void MetricsPackage::load(const std::string & filepath_to_dir_or_file)
   }
   bool was_error_metrics = false;
   metrics_dir_path_ = filepath_to_dir_or_file;
-  for (const auto & entry: fs::directory_iterator(filepath_to_dir_or_file))
+  for (const auto & entry : fs::directory_iterator(filepath_to_dir_or_file))
   {
     auto file_name = entry.path().filename();
     try
@@ -222,28 +211,33 @@ void MetricsPackage::load(const std::string & filepath_to_dir_or_file)
     throw std::runtime_error("load metrics package error: any files invalid");
   }
 }
+
 void MetricsPackage::reload()
 {
   load(metrics_dir_path_);
 }
+
 const std::string & MetricsPackage::getMetricsDirectory() const noexcept
 {
   return metrics_dir_path_;
 }
+
 const std::string & MetricsPackage::getServerName() const noexcept
 {
   return server_name_;
 }
+
 const std::vector< MetricsFile > & MetricsPackage::getServerMetrics() const noexcept
 {
   return metrics_;
 }
+
 const std::vector< std::string > & MetricsPackage::traceErrors() const noexcept
 {
   return errors_;
 }
+
 void MetricsPackage::clearErrors() noexcept
 {
   errors_.clear();
 }
-
