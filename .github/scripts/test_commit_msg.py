@@ -10,7 +10,7 @@ def check_commit_message(msg: str) -> bool:
     return False
   if re.search(r'^Merge', msg):
     return True
-  return re.search(r'^\[(client|daemon|master|tests)\]', msg)
+  return re.search(r'^\[(client|daemon|storage|master|tests)\]', msg)
 
 def main():
   commits = os.getenv("COMMITS")
@@ -21,7 +21,7 @@ def main():
   messages = [entry["message"] for entry in json.loads(commits)]
   for msg in messages:
     if not check_commit_message(msg):
-      print("Commit message must begin with with [client], [daemon], [master] or [tests]")
+      print("Commit message must begin with with [client], [daemon], [storage], [master] or [tests]")
       print("Your current message:", msg)
       sys.exit(1)
   print("All commits messages are correct")
