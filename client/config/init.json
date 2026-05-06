@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "metrics_filepath": "D:/Desktop/Work/projects/daemon_monitoring_project/client/metrics/",
+  "metrics_filepath": "./client/metrics/",
   "default_thresholds": {
     "cpu": {
       "usage": 80,

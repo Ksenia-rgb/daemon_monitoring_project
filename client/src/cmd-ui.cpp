@@ -8,9 +8,6 @@ void CMDUI::registerCommand(const std::string & name, command_handler handler)
 
 void CMDUI::run()
 {
-  // std::cout << "I'm Alive...\n";
-  // commands_.at("update_servers")({});
-  // commands_.at("refresh_metric_for")({"server-a"});
   std::cout << "== commands ==\n";
   for (auto item : commands_)
   {
@@ -21,7 +18,7 @@ void CMDUI::run()
   {
     try
     {
-      commands_.at(command);
+      commands_.at(command)();
     }
     catch (const std::out_of_range &)
     {
@@ -49,7 +46,7 @@ void CMDUI::updateMetricGraph(const std::string & name, const std::string & pc_p
     auto time_t = std::chrono::system_clock::to_time_t(metric.first);
     std::stringstream ss;
     ss << std::put_time(std::localtime(&time_t), "%Y-%m-%d %H:%M:%S");
-    // LMAO C++ FUCKIN SUCKS
+    // LMAO
     std::cout << ss.str() << " | " << metric.second << '\n';
   }
 }

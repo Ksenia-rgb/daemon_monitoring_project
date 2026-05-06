@@ -14,37 +14,37 @@ void Client::run()
       {
         loadConfig();
       });
-  ui_->registerCommand("refresh_metric_for",
-      [this]()
-      {
-        int name_number = 0;
-        std::cin >> name_number;
-        std::string name;
-        for (int i = 0; i < name_number; ++i)
-        {
-          std::cin >> name;
-          refreshMetricsFor(name);
-        }
-      });
-  ui_->registerCommand("hi",
+  // ui_->registerCommand("refresh_metric_for",
+  //     [this]()
+  //     {
+  //       int name_number = 0;
+  //       std::cin >> name_number;
+  //       std::string name;
+  //       for (int i = 0; i < name_number; ++i)
+  //       {
+  //         std::cin >> name;
+  //         refreshMetricsFor(name);
+  //       }
+  //     });
+  ui_->registerCommand("get-metric",
       [this, &client]()
       {
-        auto res = client.Get("/hi");
-        if (res)
+        std::string server_name, metric_timestamp;
+        std::cin >> server_name >> metric_timestamp;
+
+        auto res = client.Get("/get_metric?name=" + server_name + "&time=" + metric_timestamp);
+        if (!res)
         {
-          std::cout << res->status << std::endl;
-          std::cout << res->body << std::endl;
+          std::cerr << "error: " << httplib::to_string(res.error()) << std::endl;
+          return;
         }
-      });
-  ui_->registerCommand("post",
-      [this, &client]()
-      {
-        auto res = client.Post("/post", "Hello, Server!", "text/plain");
-        if (res)
+        if (res->status != 200)
         {
-          std::cout << res->status << std::endl;
-          std::cout << res->body << std::endl;
+          std::cerr << "HTTP error: " << res->status << std::endl;
+          return;
         }
+
+        std::cout << res->body << std::endl;
       });
 
   ui_->run();
@@ -71,7 +71,7 @@ void Client::refreshMetricsFor(const std::string & server_name)
   {
     for (size_t j = 0; j < temp[0].metrics.size(); ++j)
     {
-      // todo safety and smarter blyat interface because this so complicated..
+      // todo safety and smarter interface because this so complicated..
       result.push_back({temp[i].metrics[j].time, temp[i].metrics[j].data["gpu"]["usage"]});
     }
   }
