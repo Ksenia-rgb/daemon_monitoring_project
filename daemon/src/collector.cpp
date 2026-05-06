@@ -1,4 +1,7 @@
 #include "collector.hpp"
+#include <iomanip>
+#include <sstream>
+#include <iostream>
 
 Collector::MetricMap Collector::getMetrics() const
 {

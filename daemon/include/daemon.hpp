@@ -11,7 +11,7 @@
 class Daemon
 {
 public:
-  using MetricMap = std::map< std::string, double >;
+  using MetricMap = std::map< std::string, float >;
   using MetricBatch = std::vector< nlohmann::json >;
 
   Daemon(const models::DaemonConfig& config);
@@ -30,7 +30,7 @@ public:
   void stop();
   void remainingCases();
   
-private:
+//private:
   unsigned monitor_interval_;
   unsigned repeat_interval_;
   unsigned send_interval_;

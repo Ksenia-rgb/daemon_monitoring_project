@@ -11,10 +11,10 @@ namespace
 {
   Collector* getPlatformCollector()
   {
-    #if defined(_WIN16) || defined(_WIN32) || defined(_WIN64) || defined(__WIN32__) || defined(__TOS_WIN__) || defined(__WINDOWS__)
+    #if IS_WINDOWS
       return new CollectorWin();
     #endif
-    #if defined(__linux__) || defined(linux) || defined(__linux) || defined(__unix__) || defined(__unix)
+    #if IS_LINUX
       return new CollectorLinux();
     #endif
     return nullptr;

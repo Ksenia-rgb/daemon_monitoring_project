@@ -4,10 +4,10 @@
 
 class CollectorLinux final: public Collector
 {
-  virtual double getCpuUsage() const override;
-  virtual double getMemoryUsage() const override;
-  virtual double getDiskUsage() const override;
-  virtual double getTemperature() const override;
+  virtual float getCpuUsage() const override;
+  virtual float getMemoryUsage() const override;
+  virtual float getDiskUsage() const override;
+  virtual float getTemperature() const override;
 };
 
 #endif

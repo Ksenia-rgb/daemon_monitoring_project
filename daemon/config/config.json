@@ -5,7 +5,7 @@
   "send_interval": 5,
   "min_send_interval": 1,
   "send_strategy": {
-      "url": "metrics/",
+      "url": "daemon/metrics/",
       "endpoint": "server-a/1.json"
   },
   "max_batch_size": 10
