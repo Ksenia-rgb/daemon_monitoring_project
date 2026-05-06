@@ -1,9 +1,14 @@
 {
   "version": 1,
-  "metrics_filepath": "/home/faxryzen/projects/daemon_monitoring_project/client/metrics/",
+  "metrics_filepath": "./client/metrics/",
   "default_thresholds": {
-    "cpu": { "usage": 80, "temperature": 90 },
-    "ram": { "usage": 80 }
+    "cpu": {
+      "usage": 80,
+      "temperature": 90
+    },
+    "ram": {
+      "usage": 80
+    }
   },
   "servers": [
     {
@@ -59,7 +64,8 @@
             "success_compare": 1
           }
         ],
-        "sata_dvd": [{
+        "sata_dvd": [
+          {
             "type": "usage",
             "value": 85,
             "success_compare": -1

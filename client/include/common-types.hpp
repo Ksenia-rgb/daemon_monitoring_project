@@ -10,7 +10,12 @@
 using metric_value = std::variant< int, float, bool, std::string >;
 inline std::ostream & operator<<(std::ostream & os, const metric_value & val)
 {
-  std::visit([& os](const auto & v){ os << v; }, val);
+  std::visit(
+      [&os](const auto & v)
+      {
+        os << v;
+      },
+      val);
   return os;
 }
 
@@ -20,6 +25,7 @@ struct Threshold
   metric_value value;
   int success_compare;
 };
+
 struct ServerInfo
 {
   std::string name;
@@ -30,9 +36,10 @@ struct ServerInfo
 struct Metric
 {
   std::chrono::system_clock::time_point time;
-  //example: data["cpu"]["usage"] == 60
+  // example: data["cpu"]["usage"] == 60
   std::map< std::string, std::map< std::string, metric_value > > data;
 };
+
 struct MetricsFile
 {
   int version;

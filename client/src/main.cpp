@@ -1,7 +1,6 @@
-#include <iostream>
 #include <cstring>
+#include <iostream>
 #include <memory>
-
 #include "client.hpp"
 #include "cmd-ui.hpp"
 
