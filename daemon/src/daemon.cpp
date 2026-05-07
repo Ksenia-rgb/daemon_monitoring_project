@@ -176,7 +176,7 @@ void Daemon::pushMetric(const nlohmann::json& metric)
 nlohmann::json Daemon::makeJson(const MetricMap& metric, const std::string& time) const
 {
   nlohmann::json rec;
-  rec["timestamp"] = time;
+  rec["time"] = time;
   for (auto iter = metric.begin(); iter != metric.end(); ++iter)
   {
     rec[iter->first] = iter->second;

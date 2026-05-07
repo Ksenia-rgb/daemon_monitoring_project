@@ -4,35 +4,35 @@
     "disk_usage": 23.0,
     "memory_usage": 63.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T16:59:46Z"
+    "time": "2026-05-06T16:59:46Z"
   },
   {
     "cpu_usage": 54.0,
     "disk_usage": 23.0,
     "memory_usage": 63.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T16:59:47Z"
+    "time": "2026-05-06T16:59:47Z"
   },
   {
     "cpu_usage": 51.0,
     "disk_usage": 23.0,
     "memory_usage": 63.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T16:59:48Z"
+    "time": "2026-05-06T16:59:48Z"
   },
   {
     "cpu_usage": 51.0,
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T16:59:49Z"
+    "time": "2026-05-06T16:59:49Z"
   },
   {
     "cpu_usage": 52.0,
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T16:59:50Z"
+    "time": "2026-05-06T16:59:50Z"
   }
 ]
 [
@@ -41,35 +41,35 @@
     "disk_usage": 23.0,
     "memory_usage": 63.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T16:59:46Z"
+    "time": "2026-05-06T16:59:46Z"
   },
   {
     "cpu_usage": 54.0,
     "disk_usage": 23.0,
     "memory_usage": 63.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T16:59:47Z"
+    "time": "2026-05-06T16:59:47Z"
   },
   {
     "cpu_usage": 51.0,
     "disk_usage": 23.0,
     "memory_usage": 63.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T16:59:48Z"
+    "time": "2026-05-06T16:59:48Z"
   },
   {
     "cpu_usage": 51.0,
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T16:59:49Z"
+    "time": "2026-05-06T16:59:49Z"
   },
   {
     "cpu_usage": 52.0,
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T16:59:50Z"
+    "time": "2026-05-06T16:59:50Z"
   }
 ]
 [
@@ -78,35 +78,35 @@
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T16:59:51Z"
+    "time": "2026-05-06T16:59:51Z"
   },
   {
     "cpu_usage": 52.0,
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T16:59:52Z"
+    "time": "2026-05-06T16:59:52Z"
   },
   {
     "cpu_usage": 52.0,
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T16:59:53Z"
+    "time": "2026-05-06T16:59:53Z"
   },
   {
     "cpu_usage": 56.0,
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T16:59:55Z"
+    "time": "2026-05-06T16:59:55Z"
   },
   {
     "cpu_usage": 51.0,
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T16:59:56Z"
+    "time": "2026-05-06T16:59:56Z"
   }
 ]
 [
@@ -115,35 +115,35 @@
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T16:59:57Z"
+    "time": "2026-05-06T16:59:57Z"
   },
   {
     "cpu_usage": 52.0,
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T16:59:58Z"
+    "time": "2026-05-06T16:59:58Z"
   },
   {
     "cpu_usage": 52.0,
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T16:59:59Z"
+    "time": "2026-05-06T16:59:59Z"
   },
   {
     "cpu_usage": 53.0,
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:00Z"
+    "time": "2026-05-06T17:00:00Z"
   },
   {
     "cpu_usage": 54.0,
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:01Z"
+    "time": "2026-05-06T17:00:01Z"
   }
 ]
 [
@@ -152,107 +152,70 @@
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T16:59:51Z"
+    "time": "2026-05-06T16:59:51Z"
   },
   {
     "cpu_usage": 52.0,
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T16:59:52Z"
+    "time": "2026-05-06T16:59:52Z"
   },
   {
     "cpu_usage": 52.0,
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T16:59:53Z"
+    "time": "2026-05-06T16:59:53Z"
   },
   {
     "cpu_usage": 56.0,
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T16:59:55Z"
+    "time": "2026-05-06T16:59:55Z"
   },
   {
     "cpu_usage": 51.0,
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T16:59:56Z"
+    "time": "2026-05-06T16:59:56Z"
   },
   {
     "cpu_usage": 51.0,
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T16:59:57Z"
+    "time": "2026-05-06T16:59:57Z"
   },
   {
     "cpu_usage": 52.0,
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T16:59:58Z"
+    "time": "2026-05-06T16:59:58Z"
   },
   {
     "cpu_usage": 52.0,
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T16:59:59Z"
+    "time": "2026-05-06T16:59:59Z"
   },
   {
     "cpu_usage": 53.0,
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:00Z"
+    "time": "2026-05-06T17:00:00Z"
   },
   {
     "cpu_usage": 54.0,
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:01Z"
-  }
-]
-[
-  {
-    "cpu_usage": 54.0,
-    "disk_usage": 23.0,
-    "memory_usage": 62.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:02Z"
-  },
-  {
-    "cpu_usage": 52.0,
-    "disk_usage": 23.0,
-    "memory_usage": 62.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:03Z"
-  },
-  {
-    "cpu_usage": 52.0,
-    "disk_usage": 23.0,
-    "memory_usage": 62.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:04Z"
-  },
-  {
-    "cpu_usage": 52.0,
-    "disk_usage": 23.0,
-    "memory_usage": 62.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:05Z"
-  },
-  {
-    "cpu_usage": 53.0,
-    "disk_usage": 23.0,
-    "memory_usage": 62.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:06Z"
+    "time": "2026-05-06T17:00:01Z"
   }
 ]
 [
@@ -261,35 +224,35 @@
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:07Z"
+    "time": "2026-05-06T17:00:02Z"
   },
   {
     "cpu_usage": 52.0,
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:08Z"
+    "time": "2026-05-06T17:00:03Z"
   },
   {
-    "cpu_usage": 51.0,
+    "cpu_usage": 52.0,
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:09Z"
+    "time": "2026-05-06T17:00:04Z"
+  },
+  {
+    "cpu_usage": 52.0,
+    "disk_usage": 23.0,
+    "memory_usage": 62.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:05Z"
   },
   {
     "cpu_usage": 53.0,
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:10Z"
-  },
-  {
-    "cpu_usage": 53.0,
-    "disk_usage": 23.0,
-    "memory_usage": 63.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:11Z"
+    "time": "2026-05-06T17:00:06Z"
   }
 ]
 [
@@ -298,253 +261,290 @@
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:02Z"
+    "time": "2026-05-06T17:00:07Z"
   },
   {
     "cpu_usage": 52.0,
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:03Z"
+    "time": "2026-05-06T17:00:08Z"
   },
   {
-    "cpu_usage": 52.0,
+    "cpu_usage": 51.0,
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:04Z"
-  },
-  {
-    "cpu_usage": 52.0,
-    "disk_usage": 23.0,
-    "memory_usage": 62.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:05Z"
+    "time": "2026-05-06T17:00:09Z"
   },
   {
     "cpu_usage": 53.0,
     "disk_usage": 23.0,
     "memory_usage": 62.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:06Z"
-  },
-  {
-    "cpu_usage": 54.0,
-    "disk_usage": 23.0,
-    "memory_usage": 62.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:07Z"
-  },
-  {
-    "cpu_usage": 52.0,
-    "disk_usage": 23.0,
-    "memory_usage": 62.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:08Z"
-  },
-  {
-    "cpu_usage": 51.0,
-    "disk_usage": 23.0,
-    "memory_usage": 62.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:09Z"
-  },
-  {
-    "cpu_usage": 53.0,
-    "disk_usage": 23.0,
-    "memory_usage": 62.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:10Z"
+    "time": "2026-05-06T17:00:10Z"
   },
   {
     "cpu_usage": 53.0,
     "disk_usage": 23.0,
     "memory_usage": 63.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:11Z"
-  }
-]
-[
-  {
-    "cpu_usage": 52.0,
-    "disk_usage": 23.0,
-    "memory_usage": 62.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:12Z"
-  },
-  {
-    "cpu_usage": 52.0,
-    "disk_usage": 23.0,
-    "memory_usage": 63.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:13Z"
-  },
-  {
-    "cpu_usage": 53.0,
-    "disk_usage": 23.0,
-    "memory_usage": 63.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:14Z"
-  },
-  {
-    "cpu_usage": 52.0,
-    "disk_usage": 23.0,
-    "memory_usage": 63.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:15Z"
-  },
-  {
-    "cpu_usage": 51.0,
-    "disk_usage": 23.0,
-    "memory_usage": 62.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:16Z"
-  }
-]
-[
-  {
-    "cpu_usage": 51.0,
-    "disk_usage": 23.0,
-    "memory_usage": 62.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:17Z"
-  },
-  {
-    "cpu_usage": 51.0,
-    "disk_usage": 23.0,
-    "memory_usage": 62.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:18Z"
-  },
-  {
-    "cpu_usage": 51.0,
-    "disk_usage": 23.0,
-    "memory_usage": 62.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:19Z"
-  },
-  {
-    "cpu_usage": 52.0,
-    "disk_usage": 23.0,
-    "memory_usage": 62.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:20Z"
-  },
-  {
-    "cpu_usage": 52.0,
-    "disk_usage": 23.0,
-    "memory_usage": 62.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:21Z"
-  }
-]
-[
-  {
-    "cpu_usage": 52.0,
-    "disk_usage": 23.0,
-    "memory_usage": 62.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:12Z"
-  },
-  {
-    "cpu_usage": 52.0,
-    "disk_usage": 23.0,
-    "memory_usage": 63.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:13Z"
-  },
-  {
-    "cpu_usage": 53.0,
-    "disk_usage": 23.0,
-    "memory_usage": 63.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:14Z"
-  },
-  {
-    "cpu_usage": 52.0,
-    "disk_usage": 23.0,
-    "memory_usage": 63.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:15Z"
-  },
-  {
-    "cpu_usage": 51.0,
-    "disk_usage": 23.0,
-    "memory_usage": 62.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:16Z"
-  },
-  {
-    "cpu_usage": 51.0,
-    "disk_usage": 23.0,
-    "memory_usage": 62.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:17Z"
-  },
-  {
-    "cpu_usage": 51.0,
-    "disk_usage": 23.0,
-    "memory_usage": 62.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:18Z"
-  },
-  {
-    "cpu_usage": 51.0,
-    "disk_usage": 23.0,
-    "memory_usage": 62.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:19Z"
-  },
-  {
-    "cpu_usage": 52.0,
-    "disk_usage": 23.0,
-    "memory_usage": 62.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:20Z"
-  },
-  {
-    "cpu_usage": 52.0,
-    "disk_usage": 23.0,
-    "memory_usage": 62.0,
-    "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:21Z"
+    "time": "2026-05-06T17:00:11Z"
   }
 ]
 [
   {
     "cpu_usage": 54.0,
     "disk_usage": 23.0,
+    "memory_usage": 62.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:02Z"
+  },
+  {
+    "cpu_usage": 52.0,
+    "disk_usage": 23.0,
+    "memory_usage": 62.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:03Z"
+  },
+  {
+    "cpu_usage": 52.0,
+    "disk_usage": 23.0,
+    "memory_usage": 62.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:04Z"
+  },
+  {
+    "cpu_usage": 52.0,
+    "disk_usage": 23.0,
+    "memory_usage": 62.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:05Z"
+  },
+  {
+    "cpu_usage": 53.0,
+    "disk_usage": 23.0,
+    "memory_usage": 62.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:06Z"
+  },
+  {
+    "cpu_usage": 54.0,
+    "disk_usage": 23.0,
+    "memory_usage": 62.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:07Z"
+  },
+  {
+    "cpu_usage": 52.0,
+    "disk_usage": 23.0,
+    "memory_usage": 62.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:08Z"
+  },
+  {
+    "cpu_usage": 51.0,
+    "disk_usage": 23.0,
+    "memory_usage": 62.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:09Z"
+  },
+  {
+    "cpu_usage": 53.0,
+    "disk_usage": 23.0,
+    "memory_usage": 62.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:10Z"
+  },
+  {
+    "cpu_usage": 53.0,
+    "disk_usage": 23.0,
     "memory_usage": 63.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:22Z"
+    "time": "2026-05-06T17:00:11Z"
+  }
+]
+[
+  {
+    "cpu_usage": 52.0,
+    "disk_usage": 23.0,
+    "memory_usage": 62.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:12Z"
+  },
+  {
+    "cpu_usage": 52.0,
+    "disk_usage": 23.0,
+    "memory_usage": 63.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:13Z"
+  },
+  {
+    "cpu_usage": 53.0,
+    "disk_usage": 23.0,
+    "memory_usage": 63.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:14Z"
+  },
+  {
+    "cpu_usage": 52.0,
+    "disk_usage": 23.0,
+    "memory_usage": 63.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:15Z"
+  },
+  {
+    "cpu_usage": 51.0,
+    "disk_usage": 23.0,
+    "memory_usage": 62.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:16Z"
+  }
+]
+[
+  {
+    "cpu_usage": 51.0,
+    "disk_usage": 23.0,
+    "memory_usage": 62.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:17Z"
+  },
+  {
+    "cpu_usage": 51.0,
+    "disk_usage": 23.0,
+    "memory_usage": 62.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:18Z"
+  },
+  {
+    "cpu_usage": 51.0,
+    "disk_usage": 23.0,
+    "memory_usage": 62.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:19Z"
+  },
+  {
+    "cpu_usage": 52.0,
+    "disk_usage": 23.0,
+    "memory_usage": 62.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:20Z"
+  },
+  {
+    "cpu_usage": 52.0,
+    "disk_usage": 23.0,
+    "memory_usage": 62.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:21Z"
+  }
+]
+[
+  {
+    "cpu_usage": 52.0,
+    "disk_usage": 23.0,
+    "memory_usage": 62.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:12Z"
+  },
+  {
+    "cpu_usage": 52.0,
+    "disk_usage": 23.0,
+    "memory_usage": 63.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:13Z"
+  },
+  {
+    "cpu_usage": 53.0,
+    "disk_usage": 23.0,
+    "memory_usage": 63.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:14Z"
+  },
+  {
+    "cpu_usage": 52.0,
+    "disk_usage": 23.0,
+    "memory_usage": 63.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:15Z"
+  },
+  {
+    "cpu_usage": 51.0,
+    "disk_usage": 23.0,
+    "memory_usage": 62.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:16Z"
+  },
+  {
+    "cpu_usage": 51.0,
+    "disk_usage": 23.0,
+    "memory_usage": 62.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:17Z"
+  },
+  {
+    "cpu_usage": 51.0,
+    "disk_usage": 23.0,
+    "memory_usage": 62.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:18Z"
+  },
+  {
+    "cpu_usage": 51.0,
+    "disk_usage": 23.0,
+    "memory_usage": 62.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:19Z"
+  },
+  {
+    "cpu_usage": 52.0,
+    "disk_usage": 23.0,
+    "memory_usage": 62.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:20Z"
+  },
+  {
+    "cpu_usage": 52.0,
+    "disk_usage": 23.0,
+    "memory_usage": 62.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:21Z"
+  }
+]
+[
+  {
+    "cpu_usage": 54.0,
+    "disk_usage": 23.0,
+    "memory_usage": 63.0,
+    "temperature": -1.0,
+    "time": "2026-05-06T17:00:22Z"
   },
   {
     "cpu_usage": 58.0,
     "disk_usage": 23.0,
     "memory_usage": 63.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:23Z"
+    "time": "2026-05-06T17:00:23Z"
   },
   {
     "cpu_usage": 55.0,
     "disk_usage": 23.0,
     "memory_usage": 63.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:24Z"
+    "time": "2026-05-06T17:00:24Z"
   },
   {
     "cpu_usage": 54.0,
     "disk_usage": 23.0,
     "memory_usage": 63.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:25Z"
+    "time": "2026-05-06T17:00:25Z"
   },
   {
     "cpu_usage": 54.0,
     "disk_usage": 23.0,
     "memory_usage": 63.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:26Z"
+    "time": "2026-05-06T17:00:26Z"
   }
 ]
 [
@@ -553,35 +553,35 @@
     "disk_usage": 23.0,
     "memory_usage": 63.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:27Z"
+    "time": "2026-05-06T17:00:27Z"
   },
   {
     "cpu_usage": 54.0,
     "disk_usage": 23.0,
     "memory_usage": 63.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:28Z"
+    "time": "2026-05-06T17:00:28Z"
   },
   {
     "cpu_usage": 56.0,
     "disk_usage": 23.0,
     "memory_usage": 63.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:29Z"
+    "time": "2026-05-06T17:00:29Z"
   },
   {
     "cpu_usage": 54.0,
     "disk_usage": 23.0,
     "memory_usage": 63.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:30Z"
+    "time": "2026-05-06T17:00:30Z"
   },
   {
     "cpu_usage": 52.0,
     "disk_usage": 23.0,
     "memory_usage": 63.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:31Z"
+    "time": "2026-05-06T17:00:31Z"
   }
 ]
 [
@@ -590,69 +590,69 @@
     "disk_usage": 23.0,
     "memory_usage": 63.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:22Z"
+    "time": "2026-05-06T17:00:22Z"
   },
   {
     "cpu_usage": 58.0,
     "disk_usage": 23.0,
     "memory_usage": 63.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:23Z"
+    "time": "2026-05-06T17:00:23Z"
   },
   {
     "cpu_usage": 55.0,
     "disk_usage": 23.0,
     "memory_usage": 63.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:24Z"
+    "time": "2026-05-06T17:00:24Z"
   },
   {
     "cpu_usage": 54.0,
     "disk_usage": 23.0,
     "memory_usage": 63.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:25Z"
+    "time": "2026-05-06T17:00:25Z"
   },
   {
     "cpu_usage": 54.0,
     "disk_usage": 23.0,
     "memory_usage": 63.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:26Z"
+    "time": "2026-05-06T17:00:26Z"
   },
   {
     "cpu_usage": 54.0,
     "disk_usage": 23.0,
     "memory_usage": 63.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:27Z"
+    "time": "2026-05-06T17:00:27Z"
   },
   {
     "cpu_usage": 54.0,
     "disk_usage": 23.0,
     "memory_usage": 63.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:28Z"
+    "time": "2026-05-06T17:00:28Z"
   },
   {
     "cpu_usage": 56.0,
     "disk_usage": 23.0,
     "memory_usage": 63.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:29Z"
+    "time": "2026-05-06T17:00:29Z"
   },
   {
     "cpu_usage": 54.0,
     "disk_usage": 23.0,
     "memory_usage": 63.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:30Z"
+    "time": "2026-05-06T17:00:30Z"
   },
   {
     "cpu_usage": 52.0,
     "disk_usage": 23.0,
     "memory_usage": 63.0,
     "temperature": -1.0,
-    "timestamp": "2026-05-06T17:00:31Z"
+    "time": "2026-05-06T17:00:31Z"
   }
 ]
