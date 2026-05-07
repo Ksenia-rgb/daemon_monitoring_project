@@ -4,6 +4,7 @@
 #include <chrono>
 #include <string>
 #include <vector>
+#include <functional>
 #include "common-types.hpp"
 
 class UI
