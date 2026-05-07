@@ -1,74 +1,152 @@
+#include <iostream>
 #include <filesystem>
 #include <httplib.h>
-#include <iostream>
 #include <json.hpp>
-#include <variant>
 
-int main()
+#include "shared-storage.hpp"
+#include "models.hpp"
+
+namespace
+{
+  models::SharedStorageConfig parseConfig(const std::string& path)
+  {
+    std::ifstream fin(path);
+    if (!fin.is_open())
+    {
+      throw std::logic_error("<Error>: not found config file");
+    }
+    nlohmann::ordered_json json_config = nlohmann::ordered_json::parse(fin);
+    std::cout << json_config.dump(2) << '\n';
+    return json_config.get< models::SharedStorageConfig >();
+  }
+  void daemonRun(SharedStorage& storage, const httplib::Request& req, httplib::Response& res)
+  {
+    using json = nlohmann::json;
+    if (!req.has_param("name"))
+    {
+      json err = {{"error", "parametere 'name' is required"}};
+      res.set_content(err.dump(), "application/json");
+      res.status = 400;
+      return;
+    }
+    json data;
+    try
+    {
+      data = json::parse(req.body);
+    }
+    catch (const std::exception& e)
+    {
+      json err = {{"error", "json body is incorrect"}};
+      res.set_content(err.dump(), "application/json");
+      res.status = 400;
+      return;
+    }
+    storage.addMetric(req.get_param_value("name"), data);
+    json success = {{"success", "metrics addes"}};
+    res.set_content(success.dump(), "application/json");
+    res.status = 200;
+    std::cout << data.dump() << '\n';
+    std::cout << storage.getTimedMetric(req.get_param_value("name"), data["time"]) << '\n';
+  }
+  void clientRun(const SharedStorage& storage, const httplib::Request& req, httplib::Response& res)
+  {
+    using json = nlohmann::json;
+    bool flag_name = req.has_param("name");
+    bool flag_time = req.has_param("time");
+    bool flag_interval = req.has_param("begin") && req.has_param("end");
+    if (!flag_name || !(flag_time ^ flag_interval))
+    {
+      json err = {{"error", "parameteres 'name' and 'time' or 'begin, end' are required"}};
+      res.set_content(err.dump(2), "application/json");
+      res.status = 400;
+      return;
+    }
+    json data;
+    json response;
+    if (flag_time)
+    {
+      data = storage.getTimedMetric(req.get_param_value("name"), req.get_param_value("time"));
+      response["time"] = req.get_param_value("time");
+    }
+    else
+    {
+      data = storage.getIntervalBatch(req.get_param_value("name"), req.get_param_value("begin"), req.get_param_value("end"));
+      response["begin"] = req.get_param_value("end");
+    }
+    response["name"] = req.get_param_value("name");
+    response["time_units"] = "s";
+    response["metrics"] = data;
+    res.set_content(response.dump(2), "application/json");
+    res.status = 200;
+  }
+}
+
+int main(int argc, char** argv)
 {
   namespace fs = std::filesystem;
   using json = nlohmann::json;
   using ordered_json = nlohmann::ordered_json;
+  using namespace std::placeholders;
 
-  httplib::Server svr;
+  if (argc != 2) {
+    std::cerr << "<Error>: incorrect args count, need config path\n";
+    return 1;
+  }
+  models::SharedStorageConfig config = parseConfig(argv[1]);
+  SharedStorage storage(config);
 
-  fs::path metrics_dir = "./storage/metrics";
-  svr.Get("/get_metric",
-      [&metrics_dir](const httplib::Request & req, httplib::Response & res)
+  json json1 = json::parse(R"(
+    {
+      "cpu_usage": 52.0,
+      "disk_usage": 23.0,
+      "memory_usage": 63.0,
+      "temperature": -1.0,
+      "time": "2026-05-06T17:00:31Z"
+    }
+  )");
+  json json2 = json::parse(R"(
+    {
+      "cpu_usage": 53.0,
+      "disk_usage": 24.0,
+      "memory_usage": 64.0,
+      "temperature": -1.0,
+      "time": "2026-05-06T17:00:36Z"
+    }
+  )");
+  json json3 = json::parse(R"(
+    {
+      "cpu_usage": 54.0,
+      "disk_usage": 25.0,
+      "memory_usage": 65.0,
+      "temperature": -1.0,
+      "time": "2026-05-06T17:00:41Z"
+    }
+  )");
+  json batch1 = json::parse(R"(
+    [
       {
-        if (!req.has_param("name") || !req.has_param("time"))
-        {
-          json err = {{"error", "parameters 'name' and 'time' are required"}};
-          res.status = 400;
-          res.set_content(err.dump(2), "application/json");
+        "cpu_usage": 54.0,
+        "disk_usage": 25.0,
+        "memory_usage": 65.0,
+        "temperature": -1.0,
+        "time": "2026-05-06T17:00:46Z"
+      },
+      {
+        "cpu_usage": 64.0,
+        "disk_usage": 35.0,
+        "memory_usage": 75.0,
+        "temperature": -1.0,
+        "time": "2026-05-06T17:00:51Z"
+      }
+    ]
+  )");
 
-          return;
-        }
+  storage.addMetric("server-c", json1);
+  storage.addMetric("server-b", json2);
 
-        std::string query_server_name = req.get_param_value("name");
-        std::string query_metric_timestamp = req.get_param_value("time");
-
-        fs::path dir_path = metrics_dir / query_server_name;
-        for (const auto & entry : fs::directory_iterator(dir_path))
-        {
-          std::ifstream fin(entry.path().string());
-          if (!fin)
-          {
-            json err = {{"error", "invalid metrics directory set for server"}};
-            res.status = 500;
-            res.set_content(err.dump(2), "application/json");
-
-            return;
-          }
-          ordered_json jin = json::parse(fin);
-          ordered_json jres;
-          jres["version"] = jin["version"];
-          jres["id"] = jin["id"];
-          jres["name"] = jin["name"];
-          jres["interval_value"] = jin["interval_value"];
-          jres["interval_units"] = jin["interval_units"];
-          for (auto & metric_item : jin["metrics"])
-          {
-            std::string timestamp = metric_item["time"];
-            if (timestamp == query_metric_timestamp)
-            {
-              jres["time"] = metric_item["time"];
-              jres["data"] = metric_item["data"];
-
-              break;
-            }
-          }
-
-          res.set_content(jres.dump(2), "application/json");
-
-          return;
-        }
-
-        json err = {{"error", "no matching file found"}};
-        res.status = 404;
-        res.set_content(err.dump(2), "application/json");
-      });
-
-  std::cout << "Listening on port 8080..." << std::endl;
-  svr.listen("0.0.0.0", 8080);
+  httplib::Server server;
+  server.Post(config.daemon_endpoint, httplib::Server::Handler(std::bind(daemonRun, std::ref(storage), _1, _2)));
+  server.Get(config.client_endpoint, httplib::Server::Handler(std::bind(clientRun, std::cref(storage), _1, _2)));
+  server.listen("0.0.0.0", config.port);
+  std::cout << "Server is listening port " << config.port << '\n';
 }
