@@ -1,7 +1,8 @@
 #ifndef DAEMON_COLLECTOR_HPP
 #define DAEMON_COLLECTOR_HPP
 
-#if defined(_WIN16) || defined(_WIN32) || defined(_WIN64) || defined(__WIN32__) || defined(__TOS_WIN__) || defined(__WINDOWS__)
+#if defined(_WIN16) || defined(_WIN32) || defined(_WIN64) || defined(__WIN32__) || defined(__TOS_WIN__) \
+    || defined(__WINDOWS__)
   #define IS_WINDOWS 1
   #define IS_LINUX 0
 #endif

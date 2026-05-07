@@ -5,10 +5,11 @@
 
 namespace
 {
-  models::DaemonConfig parseConfig(const std::string& path)
+  models::DaemonConfig parseConfig(const std::string & path)
   {
     std::ifstream fin(path);
-    if (!fin.is_open()) {
+    if (!fin.is_open())
+    {
       throw std::logic_error("<Error>: not found config file");
     }
     nlohmann::json json_config = nlohmann::json::parse(fin);
@@ -16,7 +17,7 @@ namespace
     return json_config.get< models::DaemonConfig >();
   }
 }
-int main(int argc, char** argv)
+int main(int argc, char ** argv)
 {
   /*
   1 thread: собирает метрики, записывает в send_buffer
@@ -26,13 +27,14 @@ int main(int argc, char** argv)
             если метрики превышают порог, thread 1 закидывает их в другой буфер
   */
 
-  if (argc != 2) {
+  if (argc != 2)
+  {
     std::cerr << "<Error>: incorrect args count, need config path\n";
     return 1;
   }
   models::DaemonConfig config = parseConfig(argv[1]);
   Daemon daemon{config};
-  
+
   daemon.start();
 
   std::thread collect_thread(&Daemon::runCollect, &daemon);
