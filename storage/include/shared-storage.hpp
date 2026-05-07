@@ -16,7 +16,7 @@ private:
   std::string storage_path_;
   std::string client_endpoint_;
   std::string daemon_endpoint_;
-  std::string port_;
+  int port_;
   std::map< std::string, std::unique_ptr< SingleDaemonStorage > > daemon_storage_;
   mutable std::mutex map_mtx_;
 };

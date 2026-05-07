@@ -11,7 +11,7 @@ namespace models
     std::string storage_path;
     std::string client_endpoint;
     std::string daemon_endpoint;
-    std::string port;
+    int port;
   };
   NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SharedStorageConfig, storage_path, client_endpoint, daemon_endpoint, port)
 }

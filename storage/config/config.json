@@ -1,6 +1,6 @@
 {
   "storage_path": "storage/metrics",
-  "client_endpoint": "api/get",
-  "daemon_endpoint": "api/post",
-  "port": "8080"
+  "client_endpoint": "/api/get",
+  "daemon_endpoint": "/api/post",
+  "port": 8080
 }
