@@ -26,13 +26,13 @@ void Client::run()
   //         refreshMetricsFor(name);
   //       }
   //     });
-  ui_->registerCommand("get-metric",
+  ui_->registerCommand("get-time-metric",
       [this, &client]()
       {
-        std::string server_name, metric_timestamp;
-        std::cin >> server_name >> metric_timestamp;
+        std::string server_name, time;
+        std::cin >> server_name >> time;
 
-        auto res = client.Get("/get_metric?name=" + server_name + "&time=" + metric_timestamp);
+        auto res = client.Get("/api/get?name=" + server_name + "&time=" + time);
         if (!res)
         {
           std::cerr << "error: " << httplib::to_string(res.error()) << std::endl;
@@ -45,7 +45,30 @@ void Client::run()
         }
 
         std::cout << res->body << std::endl;
-      });
+      }
+    );
+
+    ui_->registerCommand("get-interval-metric",
+        [this, &client]()
+        {
+          std::string server_name, time_begin, time_end;
+          std::cin >> server_name >> time_begin >> time_end;
+
+          auto res = client.Get("/api/get?name=" + server_name + "&begin=" + time_begin + "&end=" + time_end);
+          if (!res)
+          {
+            std::cerr << "error: " << httplib::to_string(res.error()) << std::endl;
+            return;
+          }
+          if (res->status != 200)
+          {
+            std::cerr << "HTTP error: " << res->status << std::endl;
+            return;
+          }
+
+          std::cout << res->body << std::endl;
+        }
+      );
 
   ui_->run();
 }

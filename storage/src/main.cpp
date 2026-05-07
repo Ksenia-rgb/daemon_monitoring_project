@@ -19,7 +19,7 @@ namespace
     std::cout << json_config.dump(2) << '\n';
     return json_config.get< models::SharedStorageConfig >();
   }
-  void daemonRun(SharedStorage& storage, const httplib::Request& req, httplib::Response& res)
+  void daemonPostCallback(SharedStorage& storage, const httplib::Request& req, httplib::Response& res)
   {
     using json = nlohmann::json;
     if (!req.has_param("name"))
@@ -46,7 +46,7 @@ namespace
     res.set_content(success.dump(), "application/json");
     res.status = 200;
   }
-  void clientRun(const SharedStorage& storage, const httplib::Request& req, httplib::Response& res)
+  void clientGetCallback(const SharedStorage& storage, const httplib::Request& req, httplib::Response& res)
   {
     using json = nlohmann::json;
     bool flag_name = req.has_param("name");
@@ -86,7 +86,8 @@ int main(int argc, char** argv)
   using ordered_json = nlohmann::ordered_json;
   using namespace std::placeholders;
 
-  if (argc != 2) {
+  if (argc != 2)
+  {
     std::cerr << "<Error>: incorrect args count, need config path\n";
     return 1;
   }
@@ -94,8 +95,8 @@ int main(int argc, char** argv)
   SharedStorage storage(config);
 
   httplib::Server server;
-  server.Post(config.daemon_endpoint, httplib::Server::Handler(std::bind(daemonRun, std::ref(storage), _1, _2)));
-  server.Get(config.client_endpoint, httplib::Server::Handler(std::bind(clientRun, std::cref(storage), _1, _2)));
-  server.listen("0.0.0.0", config.port);
   std::cout << "Server is listening port " << config.port << '\n';
+  server.Post(config.daemon_endpoint, httplib::Server::Handler(std::bind(daemonPostCallback, std::ref(storage), _1, _2)));
+  server.Get(config.client_endpoint, httplib::Server::Handler(std::bind(clientGetCallback, std::cref(storage), _1, _2)));
+  server.listen("0.0.0.0", config.port);
 }
