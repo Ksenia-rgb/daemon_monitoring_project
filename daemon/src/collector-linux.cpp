@@ -1,11 +1,11 @@
 #include "collector-linux.hpp"
 
 #if IS_LINUX
-#include <iostream>
-#include <fstream>
-#include <sstream>
 #include <cmath>
 #include <filesystem>
+#include <fstream>
+#include <iostream>
+#include <sstream>
 #include <sys/statvfs.h>
 
 float CollectorLinux::getCpuUsage() const
