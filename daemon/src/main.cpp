@@ -35,6 +35,7 @@ int main(int argc, char ** argv)
   models::DaemonConfig config = parseConfig(argv[1]);
   Daemon daemon{config};
 
+  std::cout << "Daemon start\n";
   daemon.start();
 
   std::thread collect_thread(&Daemon::runCollect, &daemon);

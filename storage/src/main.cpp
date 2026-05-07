@@ -41,12 +41,10 @@ namespace
       res.status = 400;
       return;
     }
-    storage.addMetric(req.get_param_value("name"), data);
-    json success = {{"success", "metrics addes"}};
+    storage.addMetricBatch(req.get_param_value("name"), data);
+    json success = {{"ok", "metrics addes"}};
     res.set_content(success.dump(), "application/json");
     res.status = 200;
-    std::cout << data.dump() << '\n';
-    std::cout << storage.getTimedMetric(req.get_param_value("name"), data["time"]) << '\n';
   }
   void clientRun(const SharedStorage& storage, const httplib::Request& req, httplib::Response& res)
   {
@@ -94,55 +92,6 @@ int main(int argc, char** argv)
   }
   models::SharedStorageConfig config = parseConfig(argv[1]);
   SharedStorage storage(config);
-
-  json json1 = json::parse(R"(
-    {
-      "cpu_usage": 52.0,
-      "disk_usage": 23.0,
-      "memory_usage": 63.0,
-      "temperature": -1.0,
-      "time": "2026-05-06T17:00:31Z"
-    }
-  )");
-  json json2 = json::parse(R"(
-    {
-      "cpu_usage": 53.0,
-      "disk_usage": 24.0,
-      "memory_usage": 64.0,
-      "temperature": -1.0,
-      "time": "2026-05-06T17:00:36Z"
-    }
-  )");
-  json json3 = json::parse(R"(
-    {
-      "cpu_usage": 54.0,
-      "disk_usage": 25.0,
-      "memory_usage": 65.0,
-      "temperature": -1.0,
-      "time": "2026-05-06T17:00:41Z"
-    }
-  )");
-  json batch1 = json::parse(R"(
-    [
-      {
-        "cpu_usage": 54.0,
-        "disk_usage": 25.0,
-        "memory_usage": 65.0,
-        "temperature": -1.0,
-        "time": "2026-05-06T17:00:46Z"
-      },
-      {
-        "cpu_usage": 64.0,
-        "disk_usage": 35.0,
-        "memory_usage": 75.0,
-        "temperature": -1.0,
-        "time": "2026-05-06T17:00:51Z"
-      }
-    ]
-  )");
-
-  storage.addMetric("server-c", json1);
-  storage.addMetric("server-b", json2);
 
   httplib::Server server;
   server.Post(config.daemon_endpoint, httplib::Server::Handler(std::bind(daemonRun, std::ref(storage), _1, _2)));
