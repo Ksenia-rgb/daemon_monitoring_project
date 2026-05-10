@@ -26,9 +26,8 @@ services:
     volumes:
       - /proc:/proc:ro
       - /sys:/sys:ro
-      - ./daemon/config:/app/daemon/config:ro
+      - ./daemon/config/config-server-a.json:/app/daemon/config/config.json:ro
     environment:
-      - STORAGE_URL=http://storage:8080
       - SERVER_NAME=server-a
       - ENVIRONMENT=${ENVIRONMENT}
     restart: unless-stopped
@@ -46,9 +45,8 @@ services:
     volumes:
       - /proc:/proc:ro
       - /sys:/sys:ro
-      - ./daemon/config:/app/daemon/config:ro
+      - ./daemon/config/config-server-b.json:/app/daemon/config/config.json:ro
     environment:
-      - STORAGE_URL=http://storage:8080
       - SERVER_NAME=server-b
       - ENVIRONMENT=${ENVIRONMENT}
     restart: unless-stopped
@@ -63,7 +61,7 @@ services:
       - net
     profiles: ["cli"]
     volumes:
-      - ./client/config:/app/client/config:ro
+      - ./client/config/init-docker.json:/app/client/config/init.json:ro
       - ./output:/out
 
 networks:

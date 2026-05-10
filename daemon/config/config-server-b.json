@@ -1,0 +1,14 @@
+{
+  "name": "server-b",
+  "monitor_interval": 1,
+  "repeat_interval": 10,
+  "send_interval": 5,
+  "min_send_interval": 1,
+  "max_batch_size": 10,
+  "send_strategy": {
+      "url": "http://storage",
+      "endpoint": "/api/post",
+      "port": "8080"
+  },
+  "log_path": "daemon/config/log.txt"
+}
