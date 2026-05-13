@@ -1,53 +1,23 @@
 #ifndef COMMON_TYPES_HPP
 #define COMMON_TYPES_HPP
 
-#include <chrono>
-#include <map>
 #include <string>
-#include <variant>
-#include <vector>
 
-using metric_value = std::variant< int, float, bool, std::string >;
-inline std::ostream & operator<<(std::ostream & os, const metric_value & val)
+struct ServerThresholds
 {
-  std::visit(
-      [&os](const auto & v)
-      {
-        os << v;
-      },
-      val);
-  return os;
-}
-
-struct Threshold
-{
-  std::string type;
-  metric_value value;
-  int success_compare;
+  double cpu_usage;
+  double disk_usage;
+  double memory_usage;
 };
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ServerThresholds, cpu_usage, disk_usage, memory_usage)
 
-struct ServerInfo
+struct GetStrategy
 {
-  std::string name;
-  std::string url;
-  std::map< std::string, std::map< std::string, Threshold > > thresholds;
+  std::string scheme;
+  std::string host;
+  std::string port;
+  std::string endpoint;
 };
-
-struct Metric
-{
-  std::chrono::system_clock::time_point time;
-  // example: data["cpu"]["usage"] == 60
-  std::map< std::string, std::map< std::string, metric_value > > data;
-};
-
-struct MetricsFile
-{
-  int version;
-  int id;
-  std::string name;
-  size_t interval_value;
-  std::string interval_units;
-  std::vector< Metric > metrics;
-};
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GetStrategy, scheme, host, port, endpoint)
 
 #endif

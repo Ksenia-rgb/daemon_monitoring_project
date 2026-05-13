@@ -1,103 +1,68 @@
 #include "client.hpp"
-#include <httplib.h>
+#include "commands.hpp"
 
-Client::Client(std::unique_ptr< UI > ui):
+Client::Client(const ClientConfig & config, std::unique_ptr< UI > ui):
+  config_(config),
   ui_(std::move(ui))
 {}
 
 void Client::run()
 {
-  httplib::Client client("http://localhost:8080");
-
-  ui_->registerCommand("update_servers",
-      [this]()
-      {
-        loadConfig();
-      });
-  // ui_->registerCommand("refresh_metric_for",
-  //     [this]()
-  //     {
-  //       int name_number = 0;
-  //       std::cin >> name_number;
-  //       std::string name;
-  //       for (int i = 0; i < name_number; ++i)
-  //       {
-  //         std::cin >> name;
-  //         refreshMetricsFor(name);
-  //       }
-  //     });
-  ui_->registerCommand("get-time-metric",
-      [this, &client]()
-      {
-        std::string server_name, time;
-        std::cin >> server_name >> time;
-
-        auto res = client.Get("/api/get?name=" + server_name + "&time=" + time);
-        if (!res)
-        {
-          std::cerr << "error: " << httplib::to_string(res.error()) << std::endl;
-          return;
-        }
-        if (res->status != 200)
-        {
-          std::cerr << "HTTP error: " << res->status << std::endl;
-          return;
-        }
-
-        std::cout << res->body << std::endl;
-      }
-    );
-
-    ui_->registerCommand("get-interval-metric",
-        [this, &client]()
-        {
-          std::string server_name, time_begin, time_end;
-          std::cin >> server_name >> time_begin >> time_end;
-
-          auto res = client.Get("/api/get?name=" + server_name + "&begin=" + time_begin + "&end=" + time_end);
-          if (!res)
-          {
-            std::cerr << "error: " << httplib::to_string(res.error()) << std::endl;
-            return;
-          }
-          if (res->status != 200)
-          {
-            std::cerr << "HTTP error: " << res->status << std::endl;
-            return;
-          }
-
-          std::cout << res->body << std::endl;
-        }
-      );
+  ui_->registerCommand("load-config", std::bind(client_commands::loadClientConfig, std::ref(*this)));
+  ui_->registerCommand("print-time-metric", std::bind(client_commands::printTimeMetric, std::ref(*this)));
+  ui_->registerCommand("print-interval-metrics", std::bind(client_commands::printIntervalMetrics, std::ref(*this)));
 
   ui_->run();
 }
 
-void Client::loadConfig()
+const ClientConfig & Client::getConfig() const noexcept
 {
-  config_ = std::make_unique< ConfigFile >("client/config/init.json");
-  ui_->updateServers(config_.get()->getServerInfoMap());
+  return config_;
 }
 
-void Client::refreshAllMetrics()
-{}
-
-void Client::refreshMetricsFor(const std::string & server_name)
+void Client::updateConfig(const std::string & config_path)
 {
-  MetricsPackage metrics;
-  // todo: check for config existing
-  metrics.load(config_.get()->getMetricsFilePath() + server_name);
-  // todo: comparing with critical values
-  auto temp = metrics.getServerMetrics();
-  std::vector< std::pair< std::chrono::system_clock::time_point, metric_value > > result;
-  for (size_t i = 0; i < temp.size(); ++i)
+  ClientConfig newConfig;
+  newConfig.load(config_path);
+  config_ = newConfig;
+}
+
+std::string Client::getTimeMetric(const std::string & server_name, const std::string & timestamp) const
+{
+  if (config_.getServers().find(server_name) == config_.getServers().end())
   {
-    for (size_t j = 0; j < temp[0].metrics.size(); ++j)
-    {
-      // todo safety and smarter interface because this so complicated..
-      result.push_back({temp[i].metrics[j].time, temp[i].metrics[j].data["gpu"]["usage"]});
-    }
+    throw std::invalid_argument("invalid server name");
   }
 
-  ui_->updateMetricGraph(server_name, "GPU USAGE", result);
+  return get(config_.getGetStrategy().endpoint + "?name=" + server_name + "&time=" + timestamp);
+}
+
+std::string Client::getIntervalMetrics(
+    const std::string & server_name, const std::string & begin_timestamp, const std::string & end_timestamp) const
+{
+  if (config_.getServers().find(server_name) == config_.getServers().end())
+  {
+    throw std::invalid_argument("invalid server name");
+  }
+
+  return get(config_.getGetStrategy().endpoint + "?name=" + server_name + "&begin=" + begin_timestamp
+      + "&end=" + end_timestamp);
+}
+
+std::string Client::get(const std::string & query) const
+{
+  GetStrategy get_strategy = config_.getGetStrategy();
+  httplib::Client client(get_strategy.scheme + "://" + get_strategy.host + ':' + get_strategy.port);
+
+  auto res = client.Get(query);
+  if (!res)
+  {
+    throw std::runtime_error(httplib::to_string(res.error()));
+  }
+  if (res->status != 200)
+  {
+    throw std::runtime_error("HTTP error: " + res->status);
+  }
+
+  return res->body;
 }
