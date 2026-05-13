@@ -1,0 +1,25 @@
+{
+  "get_strategy": {
+    "scheme": "http",
+    "host": "localhost",
+    "port": "8080",
+    "endpoint": "/api/get"
+  },
+  "thresholds": {
+    "server-a": {
+      "cpu_usage": 80,
+      "disk_usage": 85,
+      "memory_usage": 90
+    },
+    "server-b": {
+      "cpu_usage": 85,
+      "disk_usage": 80,
+      "memory_usage": 80
+    },
+    "server-c": {
+      "cpu_usage": 85,
+      "disk_usage": 90,
+      "memory_usage": 80
+    }
+  }
+}

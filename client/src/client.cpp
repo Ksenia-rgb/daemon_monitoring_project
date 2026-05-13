@@ -1,65 +1,58 @@
 #include "client.hpp"
-#include <httplib.h>
+#include "commands.hpp"
 
-Client::Client(const ClientConfig & config):
-  config_(config)
+Client::Client(const ClientConfig & config, std::unique_ptr< UI > ui):
+  config_(config),
+  ui_(std::move(ui))
 {}
 
-const std::map< std::string, ServerInfo > & Client::loadConfig(const std::string & config_path)
+void Client::run()
 {
-  ClientConfig newConfig(config_path);
+  ui_->registerCommand("load-config", std::bind(client_commands::loadClientConfig, std::ref(*this)));
+  ui_->registerCommand("print-time-metric", std::bind(client_commands::printTimeMetric, std::ref(*this)));
+  ui_->registerCommand("print-interval-metrics", std::bind(client_commands::printIntervalMetrics, std::ref(*this)));
+
+  ui_->run();
+}
+
+const ClientConfig & Client::getConfig() const noexcept
+{
+  return config_;
+}
+
+void Client::updateConfig(const std::string & config_path)
+{
+  ClientConfig newConfig;
+  newConfig.load(config_path);
   config_ = newConfig;
-
-  return config_.getServerInfoMap();
 }
 
-const std::string & Client::getTimeMetric(const std::string & server_name, const std::string & timestamp)
+std::string Client::getTimeMetric(const std::string & server_name, const std::string & timestamp) const
 {
-  if (config_.getServerInfoMap().find(server_name) == config_.getServerInfoMap().end())
+  if (config_.getServers().find(server_name) == config_.getServers().end())
   {
     throw std::invalid_argument("invalid server name");
   }
 
-  return get("/api/get?name=" + server_name + "&time=" + timestamp);
+  return get(config_.getGetStrategy().endpoint + "?name=" + server_name + "&time=" + timestamp);
 }
 
-const std::string & Client::getIntervalMetrics(
-    const std::string & server_name, const std::string & begin_timestamp, const std::string & end_timestamp)
+std::string Client::getIntervalMetrics(
+    const std::string & server_name, const std::string & begin_timestamp, const std::string & end_timestamp) const
 {
-  if (config_.getServerInfoMap().find(server_name) == config_.getServerInfoMap().end())
+  if (config_.getServers().find(server_name) == config_.getServers().end())
   {
     throw std::invalid_argument("invalid server name");
   }
 
-  return get("/api/get?name=" + server_name + "&begin=" + begin_timestamp + "&end=" + end_timestamp);
+  return get(config_.getGetStrategy().endpoint + "?name=" + server_name + "&begin=" + begin_timestamp
+      + "&end=" + end_timestamp);
 }
 
-// void Client::refreshAllMetrics()
-// {}
-
-// void Client::refreshMetricsFor(const std::string & server_name)
-// {
-//   MetricsPackage metrics;
-//   // todo: check for config existing
-//   metrics.load(config_.get()->getMetricsFilePath() + server_name);
-//   // todo: comparing with critical values
-//   auto temp = metrics.getServerMetrics();
-//   std::vector< std::pair< std::chrono::system_clock::time_point, metric_value > > result;
-//   for (size_t i = 0; i < temp.size(); ++i)
-//   {
-//     for (size_t j = 0; j < temp[0].metrics.size(); ++j)
-//     {
-//       // todo safety and smarter interface because this so complicated..
-//       result.push_back({temp[i].metrics[j].time, temp[i].metrics[j].data["gpu"]["usage"]});
-//     }
-//   }
-
-//   ui_->updateMetricGraph(server_name, "GPU USAGE", result);
-// }
-
-const std::string & Client::get(const std::string & query) const
+std::string Client::get(const std::string & query) const
 {
-  httplib::Client client("http://localhost:8080");
+  GetStrategy get_strategy = config_.getGetStrategy();
+  httplib::Client client(get_strategy.scheme + "://" + get_strategy.host + ':' + get_strategy.port);
 
   auto res = client.Get(query);
   if (!res)

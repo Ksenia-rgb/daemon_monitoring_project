@@ -7,11 +7,9 @@ void client_commands::loadClientConfig(Client & client)
   std::string config_path;
   std::cin >> config_path;
 
-  std::map< std::string, ServerInfo > servers = client.loadConfig(config_path);
-  for (auto it = servers.begin(); it != servers.end(); ++it)
-  {
-    std::cout << "server: " << it->first << " with " << it->second.url << "\n";
-  }
+  client.updateConfig(config_path);
+
+  std::cout << "new path: " << client.getConfig().getClientConfigFilePath() << '\n';
 }
 
 void client_commands::printTimeMetric(Client & client)
