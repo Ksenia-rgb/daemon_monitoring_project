@@ -2,6 +2,7 @@
 #define COMMON_TYPES_HPP
 
 #include <string>
+#include <json.hpp>
 
 struct ServerThresholds
 {

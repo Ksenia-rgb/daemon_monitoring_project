@@ -80,3 +80,71 @@ sudo ./llvm.sh 20
 sudo apt install clang-format-20
 sudo apt install clang-tidy-20
 ```
+
+## Docker + Docker Compose (Локальный запуск всей системы)
+
+Для запуска всей системы (storage + несколько daemon'ов + client) используется Docker Compose.
+
+### Требования
+- Docker
+- Docker Compose v2
+- GNU Make
+
+### Быстрый старт
+
+```bash
+git clone --branch master https://github.com/Ksenia-rgb/daemon_monitoring_project.git
+
+cd daemon_monitoring_project
+```
+
+### 2. Запуск проекта
+```bash
+make -f docker.mk dev        # первый запуск (сборка образов)
+```
+или
+```bash
+make -f docker.mk up         # последующие запуски
+```
+
+### Основные команды Docker
+```bash
+make -f docker.mk help       # Показать все доступные команды
+make -f docker.mk dev        # Запуск с пересборкой образов (режим разработки)
+make -f docker.mk up         # Запуск без пересборки
+make -f docker.mk down       # Остановить все контейнеры
+make -f docker.mk logs       # Просмотр логов (всех сервисов)
+make -f docker.mk ps         # Статус контейнеров
+make -f docker.mk rebuild    # Пересобирает все образы без использования кэша
+make -f docker.mk client     # Запустить клиент
+make -f docker.mk client     # Пересобирает клиент без использования кэша
+```
+
+### Запуск отдельных частей
+#### Только storage
+```bash
+docker compose up -d storage
+```
+#### Только один демон
+```bash
+docker compose up -d daemon-server-a
+```
+#### Клиент с параметрами
+```bash
+make client -- --help
+#или
+docker compose --profile cli run --rm client --help
+```
+
+### Добавление нового демона
+
+1) Скопируйте блок daemon-server-b в docker-compose.yml
+2) Переименуйте в daemon-server-c
+3) Измените SERVER_NAME=server-c
+
+### Структура Docker-части проекта
+
+- docker-compose.yml — описание всех сервисов
+- .env — основные настройки (порты, окружение, список серверов)
+- Makefile — команды для разработки
+- Dockerfile'ы находятся в папках daemon/, storage/, client/

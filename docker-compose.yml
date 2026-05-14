@@ -1,0 +1,74 @@
+services:
+  storage:
+    container_name: ${COMPOSE_PROJECT_NAME}-storage
+    image: storage:local
+    build:
+      context: .
+      dockerfile: storage/Dockerfile
+    networks:
+      - net
+    ports:
+      - "${STORAGE_PORT}:8080"
+    volumes:
+      - ./storage/config:/app/storage/config:ro
+      - ./storage/metrics:/app/storage/metrics
+    restart: unless-stopped
+
+  daemon-server-a:
+    container_name: ${COMPOSE_PROJECT_NAME}-daemon-server-a
+    image: daemon:local
+    build:
+      context: .
+      dockerfile: daemon/Dockerfile
+    networks:
+      - net
+    depends_on:
+      - storage
+    volumes:
+      - /proc:/proc:ro
+      - /sys:/sys:ro
+      - ./daemon/config/config-server-a.json:/app/daemon/config/config.json:ro
+    environment:
+      - SERVER_NAME=server-a
+      - ENVIRONMENT=${ENVIRONMENT}
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+
+  daemon-server-b:
+    container_name: ${COMPOSE_PROJECT_NAME}-daemon-server-b
+    image: daemon:local
+    build:
+      context: .
+      dockerfile: daemon/Dockerfile
+    networks:
+      - net
+    depends_on:
+      - storage
+    volumes:
+      - /proc:/proc:ro
+      - /sys:/sys:ro
+      - ./daemon/config/config-server-b.json:/app/daemon/config/config.json:ro
+    environment:
+      - SERVER_NAME=server-b
+      - ENVIRONMENT=${ENVIRONMENT}
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+
+  client:
+    container_name: ${COMPOSE_PROJECT_NAME}-client
+    image: client:local
+    build:
+      context: .
+      dockerfile: client/Dockerfile
+    networks:
+      - net
+    profiles: ["cli"]
+    volumes:
+      - ./client/config/config-docker.json:/app/client/config/config.json:ro
+      - ./output:/out
+
+networks:
+  net:
+    driver: bridge

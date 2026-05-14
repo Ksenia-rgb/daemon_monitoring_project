@@ -135,7 +135,7 @@ out/storage/%.o: storage/tests/%.cpp
 	@mkdir -p $(dir $@)
 	$(if $(SILENT),,@echo [C++ ] $<)
 	$(hidecmd)$(CXX) $(CPPFLAGS) $(CXXFLAGS) -Istorage/include -Ilibs -Wno-old-style-cast -Wno-unused-parameter -MMD -MP -c -o $@ $<
-	
+
 
 %/.dir:
 	@mkdir -p $(@D) && touch $@
